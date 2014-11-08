@@ -63,8 +63,6 @@ public class Utils
 			}
 		}
 
-	//	Log.e(Constants.TAG, String.format("GetEnabledWidgets() - MobileData = %b, Wi-Fi = %b", mobileDataWidgets, wifiWidgets));
-
 		return new EnabledWidgets(mobileDataWidgets, wifiWidgets);
 	}
 }

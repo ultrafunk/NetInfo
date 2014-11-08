@@ -88,11 +88,11 @@ public class WidgetConfig
 		if (isLockscreenWidget)
 		{
 			if (showBothWidgets())
-				layoutId = R.layout.widget_keyguard;
+				layoutId = R.layout.widget_keyguard_collapsed;
 			else if (mobileDataWidget)
-				layoutId = R.layout.widget_keyguard_mobile;
+				layoutId = R.layout.widget_keyguard_mobile_collapsed;
 			else
-				layoutId = R.layout.widget_keyguard_wifi;
+				layoutId = R.layout.widget_keyguard_wifi_collapsed;
 		}
 		else
 		{

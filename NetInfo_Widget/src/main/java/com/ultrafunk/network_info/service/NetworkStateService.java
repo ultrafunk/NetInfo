@@ -33,6 +33,8 @@ import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.util.Log;
+import android.widget.Toast;
 
 import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.util.EnabledWidgets;
@@ -61,7 +63,7 @@ public class NetworkStateService extends Service
 	{
 		super.onCreate();
 
-	//	Log.e(Constants.TAG, "NetworkStateService.onCreate()");
+	//	Log.d(Constants.TAG, "NetworkStateService.onCreate()");
 
 		localBroadcastManager = LocalBroadcastManager.getInstance(this);
 		telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -82,7 +84,7 @@ public class NetworkStateService extends Service
 		{
 			final String action = intent.getAction();
 
-		//	Log.e(Constants.TAG, "NetworkStateService.onStartCommand(): " + action);
+		//	Log.d(Constants.TAG, "NetworkStateService.onStartCommand(): " + action);
 
 			if (Constants.ACTION_UPDATE_SERVICE_STATE.equals(action))
 			{
@@ -104,7 +106,7 @@ public class NetworkStateService extends Service
 							if ((wifiInfo != null) && (wifiInfo.getSupplicantState() == SupplicantState.SCANNING))
 								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_SCANNING));
 						}
-					}, 5000);
+					}, 5 * 1000);
 				}
 				else if (Constants.ACTION_WIFI_CONNECTED.equals(action))
 				{
@@ -117,9 +119,8 @@ public class NetworkStateService extends Service
 							if ((wifiInfo != null) && (wifiInfo.getLinkSpeed() != -1))
 								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_LINK_SPEED));
 						}
-					}, 3000);
+					}, 3 * 1000);
 
-					/*
 					// ToDo: Check if a longer delay (15 - 30 sec) returns a link speed if it fails the first time...
 					handler.postDelayed(new Runnable()
 					{
@@ -127,11 +128,26 @@ public class NetworkStateService extends Service
 						{
 							WifiInfo wifiInfo = wifiManager.getConnectionInfo();
 
+							Toast.makeText(NetworkStateService.this, "ACTION_WIFI_CONNECTED: 15 sec - " + wifiInfo.getLinkSpeed(), Toast.LENGTH_SHORT).show();
+
 							if ((wifiInfo != null) && (wifiInfo.getLinkSpeed() != -1))
 								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_LINK_SPEED));
 						}
-					}, 15000);
-					*/
+					}, 15 * 1000);
+
+					// ToDo: Check if a longer delay (15 - 30 sec) returns a link speed if it fails the first time...
+					handler.postDelayed(new Runnable()
+					{
+						public void run()
+						{
+							WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+
+							Toast.makeText(NetworkStateService.this, "ACTION_WIFI_CONNECTED: 30 sec - " + wifiInfo.getLinkSpeed(), Toast.LENGTH_SHORT).show();
+
+							if ((wifiInfo != null) && (wifiInfo.getLinkSpeed() != -1))
+								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_LINK_SPEED));
+						}
+					}, 30 * 1000);
 				}
 			}
 		}
@@ -144,7 +160,7 @@ public class NetworkStateService extends Service
 	{
 		super.onDestroy();
 
-	//	Log.e(Constants.TAG, "NetworkStateService.onDestroy()");
+	//	Log.d(Constants.TAG, "NetworkStateService.onDestroy()");
 
 		mobileDataDestroy();
 		wifiDestroy();
@@ -176,8 +192,6 @@ public class NetworkStateService extends Service
 
 	private void mobileDataInit()
 	{
-	//	Log.e(Constants.TAG, "NetworkStateService.mobileDataInit()");
-
 		mobileDataStatusReceiver = new MobileDataStatusReceiver();
 		mobileDataStateListener = new MobileDataStateListener(this);
 		mobileDataSettingObserver = new MobileDataSettingObserver(this);
@@ -196,8 +210,6 @@ public class NetworkStateService extends Service
 	{
 		if (mobileDataStatusReceiver != null)
 		{
-		//	Log.e(Constants.TAG, "NetworkStateService.mobileDataDestroy()");
-
 			telephonyManager.listen(mobileDataStateListener, PhoneStateListener.LISTEN_NONE);
 			mobileDataStateListener = null;
 
@@ -211,8 +223,6 @@ public class NetworkStateService extends Service
 
 	private void wifiInit()
 	{
-	//	Log.e(Constants.TAG, "NetworkStateService.wifiInit()");
-
 		wifiStatusReceiver = new WifiStatusReceiver();
 
 		IntentFilter intentFilter = new IntentFilter();
@@ -227,8 +237,6 @@ public class NetworkStateService extends Service
 	{
 		if (wifiStatusReceiver != null)
 		{
-		//	Log.e(Constants.TAG, "NetworkStateService.wifiDestroy()");
-
 			localBroadcastManager.unregisterReceiver(wifiStatusReceiver);
 			unregisterReceiver(wifiStatusReceiver);
 			wifiStatusReceiver = null;

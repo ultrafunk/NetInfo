@@ -46,7 +46,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 	{
 		final String action = intent.getAction();
 
-	//	Log.e(Constants.TAG, "MobileDataStatusReceiver: " + action);
+	//	Log.d(Constants.TAG, "MobileDataStatusReceiver: " + action);
 
 		updateMobileDataViews = true;
 

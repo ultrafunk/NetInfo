@@ -19,12 +19,15 @@ package com.ultrafunk.network_info;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.ultrafunk.network_info.config.WidgetConfig;
@@ -42,7 +45,6 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onDisabled(Context context)
 	{
 		super.onDisabled(context);
-	//	Log.e(Constants.TAG, "onDisabled()");
 		setReceiversAndServiceState(context);
 	}
 
@@ -50,7 +52,6 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onDeleted(Context context, int[] appWidgetIds)
 	{
 		super.onDeleted(context, appWidgetIds);
-	//	Log.e(Constants.TAG, "onDeleted()");
 		setReceiversAndServiceState(context);
 	}
 
@@ -59,7 +60,7 @@ public class WidgetProvider extends AppWidgetProvider
 	{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-	//	Log.e(Constants.TAG, "onUpdate()");
+	//	Log.d(Constants.TAG, "onUpdate()");
 
 		WidgetConfig widgetConfig = new WidgetConfig(context);
 
@@ -70,6 +71,22 @@ public class WidgetProvider extends AppWidgetProvider
 		}
 
 		setReceiversAndServiceState(context);
+	}
+
+	@Override
+	public void onAppWidgetOptionsChanged (Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
+	{
+		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+
+		/*
+		int category = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1);
+
+		if (category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD)
+		{
+			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_keyguard_small);
+			appWidgetManager.updateAppWidget(appWidgetId, remoteViews);
+		}
+		*/
 	}
 
 	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, WidgetConfig widgetPrefs)

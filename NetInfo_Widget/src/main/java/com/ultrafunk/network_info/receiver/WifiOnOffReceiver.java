@@ -35,7 +35,7 @@ public class WifiOnOffReceiver extends WidgetBroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-	//	Log.e(Constants.TAG, "WifiOnOffReceiver: " + intent.getAction());
+	//	Log.d(Constants.TAG, "WifiOnOffReceiver: " + intent.getAction());
 
 		updateWifiViews = true;
 
