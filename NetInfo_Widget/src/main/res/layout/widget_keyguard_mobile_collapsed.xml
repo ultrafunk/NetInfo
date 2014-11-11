@@ -2,8 +2,9 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/containerRelativeLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_width="175dp"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal" >
 
     <RelativeLayout
         android:id="@+id/mobileParentRelativeLayout"
@@ -25,10 +26,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:paddingBottom="4dp"
-                android:textSize="?android:attr/textAppearanceMedium"
+                android:paddingBottom="3dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@android:color/white"
-                android:text="Mobile data"
+                android:text="Mobile"
                 android:includeFontPadding="false"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true" />
@@ -38,8 +39,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="5dp"
-                android:paddingBottom="4dp"
-                android:textSize="?android:attr/textAppearanceMedium"
+                android:paddingBottom="3dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="@color/medium_gray"
                 android:includeFontPadding="false"
                 android:layout_alignParentTop="true"
@@ -59,7 +60,7 @@
         <RelativeLayout
             android:id="@+id/mobileChangeRelativeLayout"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="60dp"
             android:layout_below="@+id/mobileHeaderSpacerTextView"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
@@ -71,9 +72,9 @@
                 android:id="@+id/mobileNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@android:color/white"
                 android:includeFontPadding="false"
-                android:paddingBottom="5dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
@@ -85,7 +86,6 @@
                 android:layout_below="@+id/mobileNameTextView"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:includeFontPadding="false"
-                android:paddingBottom="5dp"
                 android:textColor="@color/medium_gray"
                 android:singleLine="true"
                 android:ellipsize="end"

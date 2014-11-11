@@ -65,4 +65,9 @@ public class Utils
 
 		return new EnabledWidgets(mobileDataWidgets, wifiWidgets);
 	}
+	
+	public static boolean isDeviceTablet(Context context)
+	{
+		return (context.getResources().getConfiguration().smallestScreenWidthDp >= 600);
+	}
 }

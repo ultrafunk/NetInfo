@@ -44,7 +44,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 	{
 		final String action = intent.getAction();
 
-	//	Log.d(Constants.TAG, "WifiStatusReceiver: " + action);
+		Log.e(Constants.TAG, "WifiStatusReceiver: " + action);
 
 		updateWifiViews = true;
 

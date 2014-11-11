@@ -120,34 +120,6 @@ public class NetworkStateService extends Service
 								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_LINK_SPEED));
 						}
 					}, 3 * 1000);
-
-					// ToDo: Check if a longer delay (15 - 30 sec) returns a link speed if it fails the first time...
-					handler.postDelayed(new Runnable()
-					{
-						public void run()
-						{
-							WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-
-							Toast.makeText(NetworkStateService.this, "ACTION_WIFI_CONNECTED: 15 sec - " + wifiInfo.getLinkSpeed(), Toast.LENGTH_SHORT).show();
-
-							if ((wifiInfo != null) && (wifiInfo.getLinkSpeed() != -1))
-								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_LINK_SPEED));
-						}
-					}, 15 * 1000);
-
-					// ToDo: Check if a longer delay (15 - 30 sec) returns a link speed if it fails the first time...
-					handler.postDelayed(new Runnable()
-					{
-						public void run()
-						{
-							WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-
-							Toast.makeText(NetworkStateService.this, "ACTION_WIFI_CONNECTED: 30 sec - " + wifiInfo.getLinkSpeed(), Toast.LENGTH_SHORT).show();
-
-							if ((wifiInfo != null) && (wifiInfo.getLinkSpeed() != -1))
-								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_WIFI_LINK_SPEED));
-						}
-					}, 30 * 1000);
 				}
 			}
 		}
