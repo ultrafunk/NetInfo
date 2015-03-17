@@ -23,7 +23,6 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -44,7 +43,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 	{
 		final String action = intent.getAction();
 
-		Log.e(Constants.TAG, "WifiStatusReceiver: " + action);
+	//	Log.e(this.getClass().getSimpleName(), "onReceive(): " + action);
 
 		updateWifiViews = true;
 

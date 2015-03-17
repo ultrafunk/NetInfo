@@ -49,6 +49,8 @@ public class MobileDataStateListener extends PhoneStateListener
 	@Override
 	public void onServiceStateChanged(ServiceState serviceState)
 	{
+	//	Log.e(this.getClass().getSimpleName(), "onServiceStateChanged(): " + serviceState.getState());
+
 		switch (serviceState.getState())
 		{
 			case ServiceState.STATE_EMERGENCY_ONLY:
@@ -58,7 +60,14 @@ public class MobileDataStateListener extends PhoneStateListener
 				break;
 
 			default:
-				NetworkStateService.setMobileOutOfService(false);
+				{
+					NetworkStateService.setMobileOutOfService(false);
+
+					// If the device is network roaming but mobile data roaming is disabled, this
+					// broadcast is necessary to properly update the widget on service state changes.
+					if ((serviceState.getState() == ServiceState.STATE_IN_SERVICE) && serviceState.getRoaming())
+						LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Constants.ACTION_SERVICE_STATE_CHANGED));
+				}
 				break;
 		}
 	}

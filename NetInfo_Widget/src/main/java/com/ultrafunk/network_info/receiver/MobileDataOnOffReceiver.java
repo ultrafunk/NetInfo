@@ -35,7 +35,7 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-	//	Log.d(Constants.TAG, "MobileDataOnOffReceiver: " + intent.getAction());
+	//	Log.e(this.getClass().getSimpleName(), "onReceive(): " + intent.getAction());
 
 		updateMobileDataViews = true;
 

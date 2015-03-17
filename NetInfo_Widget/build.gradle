@@ -1,19 +1,20 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    compileSdkVersion 19
+    buildToolsVersion "22"
 
     defaultConfig {
         applicationId "com.ultrafunk.network_info"
         minSdkVersion 16
-        targetSdkVersion 21
-        versionCode 12
-        versionName "1.5.1"
+        maxSdkVersion 19
+        targetSdkVersion 19
+        versionCode 13
+        versionName "1.5.2"
     }
     buildTypes {
         release {
-            runProguard true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -21,5 +22,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile "com.android.support:support-v4:21.0.0"
+    compile "com.android.support:support-v4:22.0.0"
 }

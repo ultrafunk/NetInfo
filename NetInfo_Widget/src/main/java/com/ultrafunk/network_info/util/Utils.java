@@ -25,7 +25,6 @@ import android.os.Bundle;
 
 import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.WidgetProvider;
-import com.ultrafunk.network_info.util.EnabledWidgets;
 
 public class Utils
 {
@@ -64,10 +63,5 @@ public class Utils
 		}
 
 		return new EnabledWidgets(mobileDataWidgets, wifiWidgets);
-	}
-	
-	public static boolean isDeviceTablet(Context context)
-	{
-		return (context.getResources().getConfiguration().smallestScreenWidthDp >= 600);
 	}
 }

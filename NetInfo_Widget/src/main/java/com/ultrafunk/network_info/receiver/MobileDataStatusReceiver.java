@@ -23,7 +23,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -35,7 +34,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 {
 	private TelephonyManager telephonyManager = null;
 	private int dataState = -1;
-	private String networkOperatorName = null;
+	private String networkOperatorAndServiceProvider = null;
 	private boolean isMobileDataEnabled = false;
 	private boolean isAirplaneModeOn = false;
 	private boolean isOutOfService = false;
@@ -46,13 +45,14 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 	{
 		final String action = intent.getAction();
 
-		Log.e(Constants.TAG, "MobileDataStatusReceiver: " + action);
+	//	Log.e(this.getClass().getSimpleName(), "onReceive(): " + action);
 
 		updateMobileDataViews = true;
 
 		telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		dataState = telephonyManager.getDataState();
-		networkOperatorName = telephonyManager.getNetworkOperatorName();
+		String networkOperatorName = telephonyManager.getNetworkOperatorName();
+		String simOperatorName = telephonyManager.getSimOperatorName();
 		isMobileDataEnabled = MobileDataUtils.getMobileDataEnabled(context);
 		isAirplaneModeOn = MobileDataUtils.getAirplaneModeOn(context);
 		isOutOfService = NetworkStateService.isMobileOutOfService();
@@ -60,6 +60,14 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 		if ((networkOperatorName == null) || (networkOperatorName.isEmpty()))
 			networkOperatorName = "unknown network";
+
+		if (simOperatorName == null)
+			simOperatorName = "";
+
+		if (networkOperatorName.equalsIgnoreCase(simOperatorName))
+			networkOperatorAndServiceProvider = networkOperatorName;
+		else
+			networkOperatorAndServiceProvider = networkOperatorName + " - " + simOperatorName;
 
 		if (Constants.ACTION_DATA_CONNECTION_CHANGED.equals(action) ||
 			Constants.ACTION_DATA_STATE_CHANGED.equals(action) ||
@@ -110,7 +118,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			{
 				remoteViews.setTextViewText(R.id.mobileOnOffTextView, "ON");
 				remoteViews.setTextViewText(R.id.mobileNameTextView, "not connected");
-				remoteViews.setTextViewText(R.id.mobileDetailsTextView, networkOperatorName);
+				remoteViews.setTextViewText(R.id.mobileDetailsTextView, networkOperatorAndServiceProvider);
 			}
 			else
 			{
@@ -133,7 +141,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			remoteViews.setTextColor(R.id.mobileOnOffTextView, context.getResources().getColor(R.color.light_green));
 			remoteViews.setTextViewText(R.id.mobileOnOffTextView, "ON");
 			remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorName);
+			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
 			remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.VISIBLE);
 			remoteViews.setTextViewText(R.id.mobileDetailsTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - roaming" : ""));
 		}

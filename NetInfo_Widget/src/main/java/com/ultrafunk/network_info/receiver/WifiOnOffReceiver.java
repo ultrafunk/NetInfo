@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -35,7 +34,7 @@ public class WifiOnOffReceiver extends WidgetBroadcastReceiver
 	@Override
 	public void onReceive(Context context, Intent intent)
 	{
-	//	Log.d(Constants.TAG, "WifiOnOffReceiver: " + intent.getAction());
+	//	Log.e(this.getClass().getSimpleName(), "onReceive(): " + intent.getAction());
 
 		updateWifiViews = true;
 

@@ -24,7 +24,6 @@ import android.view.Gravity;
 
 import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.R;
-import com.ultrafunk.network_info.util.Utils;
 
 public class WidgetConfig
 {
@@ -89,11 +88,11 @@ public class WidgetConfig
 		if (isLockscreenWidget)
 		{
 			if (showBothWidgets())
-				layoutId = R.layout.widget_keyguard_collapsed;
+				layoutId = R.layout.widget_keyguard;
 			else if (mobileDataWidget)
-				layoutId = R.layout.widget_keyguard_mobile_collapsed;
+				layoutId = R.layout.widget_keyguard_mobile;
 			else
-				layoutId = R.layout.widget_keyguard_wifi_collapsed;
+				layoutId = R.layout.widget_keyguard_wifi;
 		}
 		else
 		{
@@ -108,9 +107,7 @@ public class WidgetConfig
 		Bundle options = new Bundle();
 		options.putBoolean(Constants.PREF_MOBILE_DATA_WIDGET, mobileDataWidget);
 		options.putBoolean(Constants.PREF_WIFI_WIDGET, wifiWidget);
-		
-	//	if (!isLockscreenWidget || Utils.isDeviceTablet(context))
-			options.putInt(Constants.PREF_LAYOUT_ID, layoutId);
+		options.putInt(Constants.PREF_LAYOUT_ID, layoutId);
 
 		AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
 		appWidgetManager.updateAppWidgetOptions(appWidgetId, options);

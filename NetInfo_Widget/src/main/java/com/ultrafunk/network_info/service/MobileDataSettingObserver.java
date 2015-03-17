@@ -21,8 +21,10 @@ import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
 import android.support.v4.content.LocalBroadcastManager;
+import android.telephony.TelephonyManager;
 
 import com.ultrafunk.network_info.Constants;
+import com.ultrafunk.network_info.receiver.MobileDataUtils;
 import com.ultrafunk.network_info.util.Utils;
 
 public class MobileDataSettingObserver extends ContentObserver
@@ -44,7 +46,15 @@ public class MobileDataSettingObserver extends ContentObserver
 	@Override
 	public void onChange(boolean selfChange, Uri uri)
 	{
-		if (Utils.isWifiConnected(context) || NetworkStateService.isMobileOutOfService())
+		if (Utils.isWifiConnected(context) || NetworkStateService.isMobileOutOfService() || isMobileDataDisconnectedDueToRoaming())
 			LocalBroadcastManager.getInstance(context).sendBroadcast(new Intent(Constants.ACTION_DATA_STATE_CHANGED));
+	}
+
+	// https://android.googlesource.com/platform/packages/apps/Phone/+/ics-mr0/src/com/android/phone/PhoneApp.java
+	// Line: 1450 - boolean disconnectedDueToRoaming =
+	private boolean isMobileDataDisconnectedDueToRoaming()
+	{
+		TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+		return (MobileDataUtils.getDataRoaming(context) == false) && telephonyManager.isNetworkRoaming();
 	}
 }

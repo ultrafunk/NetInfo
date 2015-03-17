@@ -33,8 +33,6 @@ import android.provider.Settings;
 import android.support.v4.content.LocalBroadcastManager;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-import android.widget.Toast;
 
 import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.util.EnabledWidgets;
@@ -63,7 +61,7 @@ public class NetworkStateService extends Service
 	{
 		super.onCreate();
 
-	//	Log.d(Constants.TAG, "NetworkStateService.onCreate()");
+	//	Log.e(this.getClass().getSimpleName(), "onCreate()");
 
 		localBroadcastManager = LocalBroadcastManager.getInstance(this);
 		telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -84,7 +82,7 @@ public class NetworkStateService extends Service
 		{
 			final String action = intent.getAction();
 
-		//	Log.d(Constants.TAG, "NetworkStateService.onStartCommand(): " + action);
+		//	Log.e(this.getClass().getSimpleName(), "onStartCommand(): " + action);
 
 			if (Constants.ACTION_UPDATE_SERVICE_STATE.equals(action))
 			{
@@ -132,7 +130,7 @@ public class NetworkStateService extends Service
 	{
 		super.onDestroy();
 
-	//	Log.d(Constants.TAG, "NetworkStateService.onDestroy()");
+	//	Log.e(this.getClass().getSimpleName(), "onDestroy()");
 
 		mobileDataDestroy();
 		wifiDestroy();

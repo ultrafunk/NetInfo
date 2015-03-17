@@ -19,15 +19,12 @@ package com.ultrafunk.network_info;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
-import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.provider.Settings;
-import android.util.Log;
 import android.widget.RemoteViews;
 
 import com.ultrafunk.network_info.config.WidgetConfig;
@@ -45,6 +42,7 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onDisabled(Context context)
 	{
 		super.onDisabled(context);
+	//	Log.e(this.getClass().getSimpleName(), "onDisabled()");
 		setReceiversAndServiceState(context);
 	}
 
@@ -52,6 +50,7 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onDeleted(Context context, int[] appWidgetIds)
 	{
 		super.onDeleted(context, appWidgetIds);
+	//	Log.e(this.getClass().getSimpleName(), "onDeleted()");
 		setReceiversAndServiceState(context);
 	}
 
@@ -60,7 +59,7 @@ public class WidgetProvider extends AppWidgetProvider
 	{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
 
-		Log.e(Constants.TAG, "onUpdate()");
+	//	Log.e(this.getClass().getSimpleName(), "onUpdate()");
 
 		WidgetConfig widgetConfig = new WidgetConfig(context);
 
@@ -73,52 +72,24 @@ public class WidgetProvider extends AppWidgetProvider
 		setReceiversAndServiceState(context);
 	}
 
-	@Override
-	public void onAppWidgetOptionsChanged (Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
+	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, WidgetConfig widgetPrefs)
 	{
-		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), widgetPrefs.getLayoutId());
 
-		Log.e(Constants.TAG, "onAppWidgetOptionsChanged()");
+		if (widgetPrefs.isLockscreenWidget())
+			remoteViews.setInt(widgetPrefs.showBothWidgets() ? R.id.keyguardLinearLayout : R.id.containerRelativeLayout, "setGravity", widgetPrefs.getLockscreenGravity());
 
-		/*
-		int category = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1);
-
-		if (category == AppWidgetProviderInfo.WIDGET_CATEGORY_KEYGUARD)
+		if (widgetPrefs.showMobileDataWidget())
 		{
-			int minHeight = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_HEIGHT);
-			int layoutId;
-
-			if (minHeight < 100)
-				layoutId = R.layout.widget_keyguard_collapsed;
-			else
-				layoutId = R.layout.widget_keyguard_expanded;
-
-			WidgetConfig widgetConfig = new WidgetConfig(context);
-		//	widgetConfig.read(appWidgetId);
-			widgetConfig.setLayoutId(layoutId);
-			updateWidget(context, appWidgetManager, appWidgetId, widgetConfig);
-		}
-		*/
-	}
-
-	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, WidgetConfig widgetConfig)
-	{
-		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), widgetConfig.getLayoutId());
-
-		if (widgetConfig.isLockscreenWidget())
-			remoteViews.setInt(widgetConfig.showBothWidgets() ? R.id.keyguardLinearLayout : R.id.containerRelativeLayout, "setGravity", widgetConfig.getLockscreenGravity());
-
-		if (widgetConfig.showMobileDataWidget())
-		{
-			remoteViews.setInt(R.id.mobileParentRelativeLayout, "setBackgroundColor", Color.argb(widgetConfig.getBackgroundTransparencyAlpha(), 0, 0, 0));
+			remoteViews.setInt(R.id.mobileParentRelativeLayout, "setBackgroundColor", Color.argb(widgetPrefs.getBackgroundTransparencyAlpha(), 0, 0, 0));
 			remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF));
 			remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS));
 			broadcastUpdateWidget(context, MobileDataStatusReceiver.class, appWidgetId);
 		}
 
-		if (widgetConfig.showWifiWidget())
+		if (widgetPrefs.showWifiWidget())
 		{
-			remoteViews.setInt(R.id.wifiParentRelativeLayout, "setBackgroundColor", Color.argb(widgetConfig.getBackgroundTransparencyAlpha(), 0, 0, 0));
+			remoteViews.setInt(R.id.wifiParentRelativeLayout, "setBackgroundColor", Color.argb(widgetPrefs.getBackgroundTransparencyAlpha(), 0, 0, 0));
 			remoteViews.setOnClickPendingIntent(R.id.wifiOnOffRelativeLayout, getBroadcastPendingIntent(context, WifiOnOffReceiver.class, Constants.ONCLICK_WIFI_ONOFF));
 			remoteViews.setOnClickPendingIntent(R.id.wifiChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_WIFI_SETTINGS));
 			broadcastUpdateWidget(context, WifiStatusReceiver.class, appWidgetId);

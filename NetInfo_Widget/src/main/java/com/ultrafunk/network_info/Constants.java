@@ -18,7 +18,7 @@ package com.ultrafunk.network_info;
 
 public class Constants
 {
-	public static final String TAG = "com.ultrafunk.network_info";
+	public static final String APP_ID = BuildConfig.APPLICATION_ID;
 
 	public static final String ACTION_UPDATE_SERVICE_STATE			= "action.UPDATE_SERVICE_STATE";
 	public static final String EXTRA_ENABLED_WIDGETS_MOBILE_DATA	= "extra.ENABLED_WIDGETS_MOBILE_DATA";
@@ -26,11 +26,11 @@ public class Constants
 
 	// Broadcasts
 	// ToDo: Should use permissions to exclude other apps from sending this broadcast to us
-	public static final String ACTION_UPDATE_WIDGET	= TAG + ".action.UPDATE_WIDGET";
-	public static final String EXTRA_APPWIDGET_ID	= TAG + ".extra.APPWIDGET_ID";
+	public static final String ACTION_UPDATE_WIDGET	= APP_ID + ".action.UPDATE_WIDGET";
+	public static final String EXTRA_APPWIDGET_ID	= APP_ID + ".extra.APPWIDGET_ID";
 
-	public static final String ONCLICK_MOBILE_DATA_ONOFF = TAG + ".onclick.MOBILE_DATA_ONOFF";
-	public static final String ONCLICK_WIFI_ONOFF		 = TAG + ".onclick.WIFI_ONOFF";
+	public static final String ONCLICK_MOBILE_DATA_ONOFF = APP_ID + ".onclick.MOBILE_DATA_ONOFF";
+	public static final String ONCLICK_WIFI_ONOFF		 = APP_ID + ".onclick.WIFI_ONOFF";
 
 	// Local broadcasts
 	public static final String ACTION_SERVICE_STATE_CHANGED		= "action.SERVICE_STATE_CHANGED";
@@ -43,7 +43,7 @@ public class Constants
 	public static final String ACTION_WIFI_LINK_SPEED	= "action.WIFI_LINK_SPEED";
 
 	// Prefs
-	public static final String PREFS_NAME 					= TAG + "_";
+	public static final String PREFS_NAME 					= APP_ID + "_";
 	public static final String PREF_IS_LOCKSCREEN_WIDGET	= "isLockscreenWidget";
 	public static final String PREF_MOBILE_DATA_WIDGET 		= "mobileDataWidget";
 	public static final String PREF_WIFI_WIDGET 		 	= "wifiWidget";

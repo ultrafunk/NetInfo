@@ -20,9 +20,7 @@ package com.ultrafunk.network_info.receiver;
 import android.content.Context;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
-import android.util.Log;
 
-import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.R;
 
 public class WifiUtils
