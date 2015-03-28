@@ -23,7 +23,9 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
+import android.os.Build;
 import android.provider.Settings;
 import android.widget.RemoteViews;
 
@@ -82,7 +84,12 @@ public class WidgetProvider extends AppWidgetProvider
 		if (widgetPrefs.showMobileDataWidget())
 		{
 			remoteViews.setInt(R.id.mobileParentRelativeLayout, "setBackgroundColor", Color.argb(widgetPrefs.getBackgroundTransparencyAlpha(), 0, 0, 0));
-			remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF));
+
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF));
+			else
+				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getDataUsagePendingIntent(context));
+
 			remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS));
 			broadcastUpdateWidget(context, MobileDataStatusReceiver.class, appWidgetId);
 		}
@@ -137,6 +144,25 @@ public class WidgetProvider extends AppWidgetProvider
 		Intent intent = new Intent(context, intentClass);
 		intent.setAction(action);
 		return PendingIntent.getBroadcast(context, 0, intent, 0);
+	}
+
+	private static PendingIntent getDataUsagePendingIntent(Context context)
+	{
+		Intent intent = new Intent();
+		intent.setClassName("com.android.settings", "com.android.settings.Settings$DataUsageSummaryActivity");
+
+		PackageManager packageManager = context.getPackageManager();
+		ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
+
+		if (resolveInfo != null)
+		{
+			int enabledSetting = packageManager.getComponentEnabledSetting(intent.getComponent());
+
+			if (enabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
+				return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		}
+
+		return getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF);
 	}
 
 	private static PendingIntent getSettingsPendingIntent(Context context, String action)

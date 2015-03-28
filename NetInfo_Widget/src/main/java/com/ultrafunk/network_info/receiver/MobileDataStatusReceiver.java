@@ -51,23 +51,11 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 		telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		dataState = telephonyManager.getDataState();
-		String networkOperatorName = telephonyManager.getNetworkOperatorName();
-		String simOperatorName = telephonyManager.getSimOperatorName();
+		networkOperatorAndServiceProvider = getNetworkOperatorAndServiceProvider();
 		isMobileDataEnabled = MobileDataUtils.getMobileDataEnabled(context);
 		isAirplaneModeOn = MobileDataUtils.getAirplaneModeOn(context);
 		isOutOfService = NetworkStateService.isMobileOutOfService();
 		isRoaming = getRoaming(context);
-
-		if ((networkOperatorName == null) || (networkOperatorName.isEmpty()))
-			networkOperatorName = "unknown network";
-
-		if (simOperatorName == null)
-			simOperatorName = "";
-
-		if (networkOperatorName.equalsIgnoreCase(simOperatorName))
-			networkOperatorAndServiceProvider = networkOperatorName;
-		else
-			networkOperatorAndServiceProvider = networkOperatorName + " - " + simOperatorName;
 
 		if (Constants.ACTION_DATA_CONNECTION_CHANGED.equals(action) ||
 			Constants.ACTION_DATA_STATE_CHANGED.equals(action) ||
@@ -93,6 +81,24 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		}
 
 		return false;
+	}
+
+	private String getNetworkOperatorAndServiceProvider()
+	{
+		String networkOperatorName = telephonyManager.getNetworkOperatorName();
+
+		if ((networkOperatorName == null) || (networkOperatorName.isEmpty()))
+			networkOperatorName = "unknown network";
+
+		if (telephonyManager.isNetworkRoaming())
+		{
+			String simOperatorName = telephonyManager.getSimOperatorName();
+
+			if ((simOperatorName != null) && !simOperatorName.isEmpty())
+				return networkOperatorName + " - " + simOperatorName;
+		}
+
+		return networkOperatorName;
 	}
 
 	@Override
