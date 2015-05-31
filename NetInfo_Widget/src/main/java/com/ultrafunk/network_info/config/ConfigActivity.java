@@ -78,7 +78,7 @@ public class ConfigActivity extends Activity
 		widgetConfig.read(appWidgetId);
 
 		TextView configurationTextView = (TextView) findViewById(R.id.configurationTextView);
-		configurationTextView.setText((isLockscreenWidget(appAppWidgetManager, appWidgetId) ? "Lock Screen" : "Home Screen") + " Configuration");
+		configurationTextView.setText((isLockscreenWidget(appAppWidgetManager, appWidgetId) ? getString(R.string.lockscreen_configuration) : getString(R.string.homescreen_configuration)));
 
 		RadioGroup showWidgetRadioGroup = (RadioGroup) findViewById(R.id.showWidgetRadioGroup);
 

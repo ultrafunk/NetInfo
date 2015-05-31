@@ -9,17 +9,36 @@
     <string name="wifi">Wi-Fi</string>
     <string name="mobile_data">Mobile data</string>
 
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
+    <string name="tap_to_change">tap to change</string>
+    <string name="turning_on">turning on…</string>
+    <string name="turning_off">turning off…</string>
+
+    <string name="unknown_network">unknown network</string>
+    <string name="no_service">no service</string>
+    <string name="not_connected">not connected</string>
+    <string name="flight_mode">flight mode</string>
+    <string name="error_mobile_data_on_flight_mode">Unable to turn Mobile data on while Flight mode is enabled.</string>
+    <string name="roaming">roaming</string>
+
+    <string name="security">Security</string>
+    <string name="no_network">no network</string>
+    <string name="connecting">connecting…</string>
+
     <!-- Widget configuration -->
+    <string name="lockscreen_configuration">Lock Screen Configuration</string>
+    <string name="homescreen_configuration">Home Screen Configuration</string>
+
     <string name="mobile_data_2_1">Mobile data (2 x 1)</string>
     <string name="wifi_2_1">Wi-Fi (2 x 1)</string>
     <string name="mobile_and_wifi_2_2">Mobile data &amp; Wi-Fi (2 x 2)</string>
 
     <string name="center_vertically">Center vertically</string>
     <string name="bg_transparency">Background transparency</string>
-    <string name="zero">0</string>
-    <string name="fifty">50</string>
-    <string name="one_hundred">100</string>
-
+    <string name="zero" translatable="false">0</string>
+    <string name="fifty" translatable="false">50</string>
+    <string name="one_hundred" translatable="false">100</string>
 
     <!--
     START: android-4.4.4_r2.0.1
@@ -29,17 +48,17 @@
     <!-- Used in Wi-Fi settings dialogs when Wi-Fi does not have any security. -->
     <string name="wifi_security_none">open</string>
     <!-- Do not translate.  Terminology for wifi with WEP security -->
-    <string name="wifi_security_wep">WEP</string>
+    <string name="wifi_security_wep" translatable="false">WEP</string>
     <!-- Do not translate.  Terminology for wifi with WPA security -->
-    <string name="wifi_security_wpa">WPA PSK</string>
+    <string name="wifi_security_wpa" translatable="false">WPA PSK</string>
     <!-- Do not translate.  Terminology for wifi with WPA2 security -->
-    <string name="wifi_security_wpa2">WPA2 PSK</string>
+    <string name="wifi_security_wpa2" translatable="false">WPA2 PSK</string>
     <!-- Do not translate.  Terminology for wifi with both WPA/WPA2 security, or unknown -->
-    <string name="wifi_security_wpa_wpa2">WPA/WPA2 PSK</string>
+    <string name="wifi_security_wpa_wpa2" translatable="false">WPA/WPA2 PSK</string>
     <!-- Do not translate.  Terminology for wifi with unknown PSK type -->
-    <string name="wifi_security_psk_generic">@string/wifi_security_wpa_wpa2</string>
+    <string name="wifi_security_psk_generic" translatable="false">@string/wifi_security_wpa_wpa2</string>
     <!-- Do not translate.  Concise terminology for wifi with 802.1x EAP security -->
-    <string name="wifi_security_eap">802.1x EAP</string>
+    <string name="wifi_security_eap" translatable="false">802.1x EAP</string>
 
     <!--
     END: android-4.4.4_r2.0.1

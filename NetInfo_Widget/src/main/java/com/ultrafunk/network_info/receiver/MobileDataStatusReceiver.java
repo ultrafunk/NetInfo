@@ -51,7 +51,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 		telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		dataState = telephonyManager.getDataState();
-		networkOperatorAndServiceProvider = getNetworkOperatorAndServiceProvider();
+		networkOperatorAndServiceProvider = getNetworkOperatorAndServiceProvider(context);
 		isMobileDataEnabled = MobileDataUtils.getMobileDataEnabled(context);
 		isAirplaneModeOn = MobileDataUtils.getAirplaneModeOn(context);
 		isOutOfService = NetworkStateService.isMobileOutOfService();
@@ -83,12 +83,12 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		return false;
 	}
 
-	private String getNetworkOperatorAndServiceProvider()
+	private String getNetworkOperatorAndServiceProvider(Context context)
 	{
 		String networkOperatorName = telephonyManager.getNetworkOperatorName();
 
 		if ((networkOperatorName == null) || (networkOperatorName.isEmpty()))
-			networkOperatorName = "unknown network";
+			networkOperatorName = context.getString(R.string.unknown_network);
 
 		if (telephonyManager.isNetworkRoaming())
 		{
@@ -107,9 +107,9 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		if (isMobileDataEnabled && isOutOfService)
 		{
 			remoteViews.setTextColor(R.id.mobileOnOffTextView, context.getResources().getColor(R.color.light_green));
-			remoteViews.setTextViewText(R.id.mobileOnOffTextView, "ON");
+			remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.on));
 			remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileNameTextView, "no service");
+			remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.no_service));
 			remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.GONE);
 			return;
 		}
@@ -122,34 +122,34 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 			if (isMobileDataEnabled && !isAirplaneModeOn)
 			{
-				remoteViews.setTextViewText(R.id.mobileOnOffTextView, "ON");
-				remoteViews.setTextViewText(R.id.mobileNameTextView, "not connected");
+				remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.on));
+				remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.not_connected));
 				remoteViews.setTextViewText(R.id.mobileDetailsTextView, networkOperatorAndServiceProvider);
 			}
 			else
 			{
-				remoteViews.setTextViewText(R.id.mobileOnOffTextView, "OFF");
+				remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.off));
 
 				if (isAirplaneModeOn)
 				{
-					remoteViews.setTextViewText(R.id.mobileNameTextView, "flight mode");
+					remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.flight_mode));
 					remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.GONE);
 				}
 				else
 				{
 					remoteViews.setViewVisibility(R.id.mobileNameTextView, View.GONE);
-					remoteViews.setTextViewText(R.id.mobileDetailsTextView, "tap to change");
+					remoteViews.setTextViewText(R.id.mobileDetailsTextView, context.getString(R.string.tap_to_change));
 				}
 			}
 		}
 		else
 		{
 			remoteViews.setTextColor(R.id.mobileOnOffTextView, context.getResources().getColor(R.color.light_green));
-			remoteViews.setTextViewText(R.id.mobileOnOffTextView, "ON");
+			remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.on));
 			remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
 			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
 			remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileDetailsTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - roaming" : ""));
+			remoteViews.setTextViewText(R.id.mobileDetailsTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - ".concat(context.getString(R.string.roaming)) : ""));
 		}
 	}
 }

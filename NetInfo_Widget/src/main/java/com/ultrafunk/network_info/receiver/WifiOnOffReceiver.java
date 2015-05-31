@@ -69,6 +69,6 @@ public class WifiOnOffReceiver extends WidgetBroadcastReceiver
 	{
 		remoteViews.setViewVisibility(R.id.wifiDetailsTextView, View.GONE);
 		remoteViews.setViewVisibility(R.id.wifiNameTextView, View.VISIBLE);
-		remoteViews.setTextViewText(R.id.wifiNameTextView, turningOn ? "turning on..." : "turning off...");
+		remoteViews.setTextViewText(R.id.wifiNameTextView, turningOn ? context.getString(R.string.turning_on) : context.getString(R.string.turning_off));
 	}
 }
