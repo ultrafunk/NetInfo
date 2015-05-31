@@ -4,6 +4,23 @@
     <string name="app_name">NetInfo Widget</string>
     <string name="widget_name">NetInfo</string>
 
+    <!-- Widget info -->
+    <string name="mobile">Mobile</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="mobile_data">Mobile data</string>
+
+    <!-- Widget configuration -->
+    <string name="mobile_data_2_1">Mobile data (2 x 1)</string>
+    <string name="wifi_2_1">Wi-Fi (2 x 1)</string>
+    <string name="mobile_and_wifi_2_2">Mobile data &amp; Wi-Fi (2 x 2)</string>
+
+    <string name="center_vertically">Center vertically</string>
+    <string name="bg_transparency">Background transparency</string>
+    <string name="zero">0</string>
+    <string name="fifty">50</string>
+    <string name="one_hundred">100</string>
+
+
     <!--
     START: android-4.4.4_r2.0.1
     https://android.googlesource.com/platform/packages/apps/Settings/+/android-4.4.4_r2.0.1/res/values/strings.xml
