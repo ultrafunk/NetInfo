@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="app_name">NetInfo Widget</string>
+    <string name="widget_name">NetInfo</string>
+    <string name="on">ON</string>
+    <string name="off">OFF</string>
     <string name="bg_transparency">Nivel de transparencia del fondo</string>
     <string name="center_vertically">Centrar verticalmente</string>
     <string name="flight_mode">modo avión</string>
