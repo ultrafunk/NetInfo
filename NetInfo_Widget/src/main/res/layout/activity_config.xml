@@ -31,7 +31,9 @@
                     android:layout_height="wrap_content"
                     android:textAllCaps="true"
                     android:textStyle="bold"
-                    android:paddingBottom="5dp"/>
+                    android:paddingBottom="5dp"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
 
                 <View
                     android:layout_width="match_parent"
@@ -155,10 +157,13 @@
                     android:id="@+id/bgTransTextView"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_toLeftOf="@+id/bgTransValTextView"
                     android:paddingBottom="10dp"
                     android:paddingTop="24dp"
-                    android:paddingLeft="16dp" />
-
+                    android:paddingLeft="16dp"
+                    android:paddingRight="10dp"
+                    android:singleLine="true"
+                    android:ellipsize="end" />
 
                 <TextView
                     android:layout_width="wrap_content"
