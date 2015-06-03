@@ -28,7 +28,7 @@
                 android:paddingBottom="8dp"
                 android:textSize="@dimen/textAppearanceExtraLarge"
                 android:textColor="@android:color/white"
-                android:text="Mobile data"
+                android:text="@string/mobile_data"
                 android:includeFontPadding="false"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true" />

@@ -60,7 +60,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 			{
 				String securityString = WifiUtils.getSecurityString(context, wifiManager, wifiInfo.getBSSID());
 				NetworkStateService.setWifiSecurityString(securityString);
-				detailsString = "Security: " + securityString;
+				detailsString = context.getString(R.string.security) + ": " + securityString;
 
 				Intent serviceIntent = new Intent(context, NetworkStateService.class);
 				serviceIntent.setAction(Constants.ACTION_WIFI_CONNECTED);
@@ -120,7 +120,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 		if (wifiInfo.getLinkSpeed() != -1)
 			detailsString = String.format("%s - %d%s", securityString, wifiInfo.getLinkSpeed(), WifiInfo.LINK_SPEED_UNITS);
 		else
-			detailsString = "Security: " + securityString;
+			detailsString = context.getString(R.string.security) + ": " + securityString;
 	}
 
 	@Override
@@ -129,15 +129,15 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 		if ((wifiState == WifiManager.WIFI_STATE_DISABLED) || (wifiState == WifiManager.WIFI_STATE_UNKNOWN))
 		{
 			remoteViews.setTextColor(R.id.wifiOnOffTextView, context.getResources().getColor(R.color.medium_gray));
-			remoteViews.setTextViewText(R.id.wifiOnOffTextView, "OFF");
+			remoteViews.setTextViewText(R.id.wifiOnOffTextView, context.getString(R.string.off));
 			remoteViews.setViewVisibility(R.id.wifiNameTextView, View.GONE);
 			remoteViews.setViewVisibility(R.id.wifiDetailsTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.wifiDetailsTextView, "tap to change");
+			remoteViews.setTextViewText(R.id.wifiDetailsTextView, context.getString(R.string.tap_to_change));
 		}
 		else if (wifiState == WifiManager.WIFI_STATE_ENABLED)
 		{
 			remoteViews.setTextColor(R.id.wifiOnOffTextView, context.getResources().getColor(R.color.light_green));
-			remoteViews.setTextViewText(R.id.wifiOnOffTextView, "ON");
+			remoteViews.setTextViewText(R.id.wifiOnOffTextView, context.getString(R.string.on));
 			remoteViews.setViewVisibility(R.id.wifiNameTextView, View.VISIBLE);
 
 			if (wifiInfo.getIpAddress() != 0)
@@ -151,9 +151,9 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 				remoteViews.setViewVisibility(R.id.wifiDetailsTextView, View.GONE);
 
 				if (detailedState == NetworkInfo.DetailedState.OBTAINING_IPADDR)
-					remoteViews.setTextViewText(R.id.wifiNameTextView, "connecting...");
+					remoteViews.setTextViewText(R.id.wifiNameTextView, context.getString(R.string.connecting));
 				else
-					remoteViews.setTextViewText(R.id.wifiNameTextView, "no network");
+					remoteViews.setTextViewText(R.id.wifiNameTextView, context.getString(R.string.no_network));
 			}
 		}
 	}

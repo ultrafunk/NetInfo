@@ -51,7 +51,7 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 
 		if (isAirplaneModeOn)
 		{
-			Toast.makeText(context, "Unable to turn Mobile data on while Flight mode is enabled.", Toast.LENGTH_LONG).show();
+			Toast.makeText(context, context.getString(R.string.error_mobile_data_on_flight_mode), Toast.LENGTH_LONG).show();
 		}
 		else
 		{
@@ -85,6 +85,6 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 	{
 		remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.GONE);
 		remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
-		remoteViews.setTextViewText(R.id.mobileNameTextView, turningOn ? "turning on..." : "turning off...");
+		remoteViews.setTextViewText(R.id.mobileNameTextView, turningOn ? context.getString(R.string.turning_on) : context.getString(R.string.turning_off));
 	}
 }

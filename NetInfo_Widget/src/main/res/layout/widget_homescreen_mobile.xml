@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Mobile"
+            android:text="@string/mobile"
             android:includeFontPadding="false"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true" />

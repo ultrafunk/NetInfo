@@ -48,7 +48,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:text="Mobile data (2 x 1)"
+                        android:text="@string/mobile_data_2_1"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:button="@null"
                         android:drawableRight="@drawable/btn_radio_holo_light"
@@ -68,7 +68,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:text="Wi-Fi (2 x 1)"
+                        android:text="@string/wifi_2_1"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:button="@null"
                         android:drawableRight="@drawable/btn_radio_holo_light"
@@ -88,7 +88,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:clickable="true"
-                        android:text="Mobile data &amp; Wi-Fi (2 x 2)"
+                        android:text="@string/mobile_and_wifi_2_2"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:button="@null"
                         android:drawableRight="@drawable/btn_radio_holo_light"
@@ -128,7 +128,7 @@
                     android:checkMark="?android:attr/listChoiceIndicatorMultiple"
                     android:checked="true"
                     android:clickable="true"
-                    android:text="Center vertically"
+                    android:text="@string/center_vertically"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:background="?android:selectableItemBackground" />
 
@@ -150,7 +150,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Background transparency"
+                    android:text="@string/bg_transparency"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:id="@+id/bgTransTextView"
                     android:layout_alignParentTop="true"
@@ -187,7 +187,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="0"
+                    android:text="@string/zero"
                     android:id="@+id/textView"
                     android:layout_below="@+id/bgTransSeekBar"
                     android:layout_alignParentLeft="true"
@@ -198,7 +198,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="50"
+                    android:text="@string/fifty"
                     android:id="@+id/textView2"
                     android:layout_below="@+id/bgTransSeekBar"
                     android:layout_centerHorizontal="true"
@@ -207,7 +207,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="100"
+                    android:text="@string/one_hundred"
                     android:id="@+id/textView3"
                     android:layout_below="@+id/bgTransSeekBar"
                     android:layout_alignParentRight="true"

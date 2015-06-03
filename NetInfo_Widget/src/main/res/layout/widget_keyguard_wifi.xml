@@ -28,7 +28,7 @@
                 android:paddingBottom="8dp"
                 android:textSize="@dimen/textAppearanceExtraLarge"
                 android:textColor="@android:color/white"
-                android:text="Wi-Fi"
+                android:text="@string/wifi"
                 android:includeFontPadding="false"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentLeft="true" />
