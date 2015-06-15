@@ -155,12 +155,7 @@ public class WidgetProvider extends AppWidgetProvider
 		ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
 
 		if (resolveInfo != null)
-		{
-			int enabledSetting = packageManager.getComponentEnabledSetting(intent.getComponent());
-
-			if (enabledSetting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED)
-				return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-		}
+		    return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		return getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF);
 	}
