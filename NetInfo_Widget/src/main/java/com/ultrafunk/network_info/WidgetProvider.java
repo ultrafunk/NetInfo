@@ -74,29 +74,33 @@ public class WidgetProvider extends AppWidgetProvider
 		setReceiversAndServiceState(context);
 	}
 
-	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, WidgetConfig widgetPrefs)
+	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, WidgetConfig widgetConfig)
 	{
-		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), widgetPrefs.getLayoutId());
+		RemoteViews remoteViews = new RemoteViews(context.getPackageName(), widgetConfig.getLayoutId());
 
-		if (widgetPrefs.isLockscreenWidget())
-			remoteViews.setInt(widgetPrefs.showBothWidgets() ? R.id.keyguardLinearLayout : R.id.containerRelativeLayout, "setGravity", widgetPrefs.getLockscreenGravity());
+		if (widgetConfig.isLockscreenWidget())
+			remoteViews.setInt(widgetConfig.showBothWidgets() ? R.id.keyguardLinearLayout : R.id.containerRelativeLayout, "setGravity", widgetConfig.getLockscreenGravity());
 
-		if (widgetPrefs.showMobileDataWidget())
+		if (widgetConfig.showMobileDataWidget())
 		{
-			remoteViews.setInt(R.id.mobileParentRelativeLayout, "setBackgroundColor", Color.argb(widgetPrefs.getBackgroundTransparencyAlpha(), 0, 0, 0));
+			remoteViews.setInt(R.id.mobileParentRelativeLayout, "setBackgroundColor", Color.argb(widgetConfig.getBackgroundTransparencyAlpha(), 0, 0, 0));
 
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF));
 			else
 				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getDataUsagePendingIntent(context));
 
-			remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS));
+			if (widgetConfig.getMobileDataSettingsScreen() == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
+				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS));
+			else
+				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getDataUsagePendingIntent(context));
+
 			broadcastUpdateWidget(context, MobileDataStatusReceiver.class, appWidgetId);
 		}
 
-		if (widgetPrefs.showWifiWidget())
+		if (widgetConfig.showWifiWidget())
 		{
-			remoteViews.setInt(R.id.wifiParentRelativeLayout, "setBackgroundColor", Color.argb(widgetPrefs.getBackgroundTransparencyAlpha(), 0, 0, 0));
+			remoteViews.setInt(R.id.wifiParentRelativeLayout, "setBackgroundColor", Color.argb(widgetConfig.getBackgroundTransparencyAlpha(), 0, 0, 0));
 			remoteViews.setOnClickPendingIntent(R.id.wifiOnOffRelativeLayout, getBroadcastPendingIntent(context, WifiOnOffReceiver.class, Constants.ONCLICK_WIFI_ONOFF));
 			remoteViews.setOnClickPendingIntent(R.id.wifiChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_WIFI_SETTINGS));
 			broadcastUpdateWidget(context, WifiStatusReceiver.class, appWidgetId);
@@ -155,7 +159,7 @@ public class WidgetProvider extends AppWidgetProvider
 		ResolveInfo resolveInfo = packageManager.resolveActivity(intent, 0);
 
 		if (resolveInfo != null)
-		    return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+			return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 		return getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF);
 	}
