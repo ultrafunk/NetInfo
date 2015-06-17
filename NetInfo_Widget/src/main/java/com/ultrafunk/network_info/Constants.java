@@ -43,11 +43,12 @@ public class Constants
 	public static final String ACTION_WIFI_LINK_SPEED	= "action.WIFI_LINK_SPEED";
 
 	// Prefs
-	public static final String PREFS_NAME 					= APP_ID + "_";
-	public static final String PREF_IS_LOCKSCREEN_WIDGET	= "isLockscreenWidget";
-	public static final String PREF_MOBILE_DATA_WIDGET 		= "mobileDataWidget";
-	public static final String PREF_WIFI_WIDGET 		 	= "wifiWidget";
-	public static final String PREF_LAYOUT_ID			 	= "layoutId";
-	public static final String PREF_LOCKSCREEN_GRAVITY		= "lockscreenGravity";
-	public static final String PREF_BACKGROUND_TRANSPARENCY = "backgroundTransparency";
+	public static final String PREFS_NAME						= APP_ID + "_";
+	public static final String PREF_IS_LOCKSCREEN_WIDGET		= "isLockscreenWidget";
+	public static final String PREF_MOBILE_DATA_WIDGET			= "mobileDataWidget";
+	public static final String PREF_WIFI_WIDGET					= "wifiWidget";
+	public static final String PREF_LAYOUT_ID					= "layoutId";
+    public static final String PREF_MOBILE_DATA_SETTINGS_SCREEN	= "mobileDataSettingsScreen";
+	public static final String PREF_LOCKSCREEN_GRAVITY			= "lockscreenGravity";
+	public static final String PREF_BACKGROUND_TRANSPARENCY		= "backgroundTransparency";
 }

@@ -17,6 +17,7 @@
 package com.ultrafunk.network_info.config;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
@@ -27,6 +28,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckedTextView;
+import android.widget.LinearLayout;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -37,7 +39,7 @@ import com.ultrafunk.network_info.R;
 import com.ultrafunk.network_info.util.Utils;
 import com.ultrafunk.network_info.WidgetProvider;
 
-public class ConfigActivity extends Activity
+public class ConfigActivity extends Activity implements SettingsScreenDialogFragment.SettingsScreenDialogListener
 {
 	private AppWidgetManager appAppWidgetManager;
 	private WidgetConfig widgetConfig;
@@ -106,6 +108,17 @@ public class ConfigActivity extends Activity
 
 				if (checkedId == R.id.showWifiRadioButton)
 					widgetConfig.setWifiWidget(true);
+			}
+		});
+
+		LinearLayout mobileSettingsScreenLinearLayout = (LinearLayout) findViewById(R.id.mobileSettingsScreenLinearLayout);
+		mobileSettingsScreenLinearLayout.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View view)
+			{
+				DialogFragment dialogFragment = new SettingsScreenDialogFragment();
+				dialogFragment.show(getFragmentManager(), "SettingsScreenDialogFragment");
 			}
 		});
 
@@ -193,6 +206,23 @@ public class ConfigActivity extends Activity
 				finish();
 			}
 		});
+	}
+
+	@Override
+	public void onDialogSelectionChanged(int selected)
+	{
+		TextView mobileCurrentSettingsScreenTextView = (TextView) findViewById(R.id.mobileCurrentSettingsScreenTextView);
+
+		if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
+		{
+			widgetConfig.setMobileDataSettingsScreen(WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS);
+			mobileCurrentSettingsScreenTextView.setText(getString(R.string.mobile_network_settings));
+		}
+		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE)
+		{
+			widgetConfig.setMobileDataSettingsScreen(WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE);
+			mobileCurrentSettingsScreenTextView.setText(getString(R.string.data_usage));
+		}
 	}
 
 	private static boolean isLockscreenWidget(AppWidgetManager appWidgetManager, int appWidgetId)

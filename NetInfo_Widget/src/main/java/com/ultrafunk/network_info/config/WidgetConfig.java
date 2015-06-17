@@ -27,6 +27,9 @@ import com.ultrafunk.network_info.R;
 
 public class WidgetConfig
 {
+	public static final int MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS = 0;
+	public static final int MOBILE_DATA_SETTINGS_DATA_USAGE = 1;
+
 	private final Context context;
 	private SharedPreferences sharedPreferences;
 
@@ -34,6 +37,7 @@ public class WidgetConfig
 	private boolean mobileDataWidget;
 	private boolean wifiWidget;
 	private int layoutId;
+	private int mobileDataSettingsScreen;
 	private int lockscreenGravity;
 	private int backgroundTransparency;
 
@@ -46,6 +50,7 @@ public class WidgetConfig
 		mobileDataWidget = false;
 		wifiWidget = false;
 		layoutId = R.layout.widget_homescreen;
+		mobileDataSettingsScreen = MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS;
 		lockscreenGravity = Gravity.TOP;
 		backgroundTransparency = 25;
 	}
@@ -58,6 +63,7 @@ public class WidgetConfig
 		mobileDataWidget = sharedPreferences.getBoolean(Constants.PREF_MOBILE_DATA_WIDGET, mobileDataWidget);
 		wifiWidget = sharedPreferences.getBoolean(Constants.PREF_WIFI_WIDGET, wifiWidget);
 		layoutId = sharedPreferences.getInt(Constants.PREF_LAYOUT_ID, layoutId);
+		mobileDataSettingsScreen = sharedPreferences.getInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, mobileDataSettingsScreen);
 		lockscreenGravity = sharedPreferences.getInt(Constants.PREF_LOCKSCREEN_GRAVITY, lockscreenGravity);
 		backgroundTransparency = sharedPreferences.getInt(Constants.PREF_BACKGROUND_TRANSPARENCY, backgroundTransparency);
 
@@ -74,6 +80,7 @@ public class WidgetConfig
 			editor.putBoolean(Constants.PREF_MOBILE_DATA_WIDGET, mobileDataWidget);
 			editor.putBoolean(Constants.PREF_WIFI_WIDGET, wifiWidget);
 			editor.putInt(Constants.PREF_LAYOUT_ID, layoutId);
+			editor.putInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, mobileDataSettingsScreen);
 			editor.putInt(Constants.PREF_LOCKSCREEN_GRAVITY, lockscreenGravity);
 			editor.putInt(Constants.PREF_BACKGROUND_TRANSPARENCY, backgroundTransparency);
 
@@ -113,24 +120,27 @@ public class WidgetConfig
 		appWidgetManager.updateAppWidgetOptions(appWidgetId, options);
 	}
 
-	public boolean isLockscreenWidget()									{ return isLockscreenWidget; }
-	public void setLockscreenWidget(boolean isLockscreenWidget)			{ this.isLockscreenWidget = isLockscreenWidget; }
+	public boolean isLockscreenWidget()										{ return isLockscreenWidget; }
+	public void setLockscreenWidget(boolean isLockscreenWidget)				{ this.isLockscreenWidget = isLockscreenWidget; }
 
-	public boolean showMobileDataWidget()								{ return mobileDataWidget; }
-	public void setMobileDataWidget(boolean mobileDataWidget)			{ this.mobileDataWidget = mobileDataWidget; }
+	public boolean showMobileDataWidget()									{ return mobileDataWidget; }
+	public void setMobileDataWidget(boolean mobileDataWidget)				{ this.mobileDataWidget = mobileDataWidget; }
 
-	public boolean showWifiWidget()										{ return wifiWidget; }
-	public void setWifiWidget(boolean wifiWidget)						{ this.wifiWidget = wifiWidget; }
+	public boolean showWifiWidget()											{ return wifiWidget; }
+	public void setWifiWidget(boolean wifiWidget)							{ this.wifiWidget = wifiWidget; }
 
-	public boolean showBothWidgets()									{ return mobileDataWidget && wifiWidget; }
-	public void setBothWidgets(boolean bothWidgets)						{ mobileDataWidget = bothWidgets; wifiWidget = bothWidgets; }
+	public boolean showBothWidgets()										{ return mobileDataWidget && wifiWidget; }
+	public void setBothWidgets(boolean bothWidgets)							{ mobileDataWidget = bothWidgets; wifiWidget = bothWidgets; }
 
-	public int getLayoutId()											{ return layoutId; }
+	public int getLayoutId()												{ return layoutId; }
 
-	public int getLockscreenGravity()									{ return lockscreenGravity; }
-	public void setLockscreenGravity(int lockscreenGravity)				{ this.lockscreenGravity = lockscreenGravity; }
+	public int getMobileDataSettingsScreen()								{ return mobileDataSettingsScreen; }
+    public void setMobileDataSettingsScreen(int mobileDataSettingsScreen)	{ this.mobileDataSettingsScreen = mobileDataSettingsScreen; }
 
-	public int getBackgroundTransparency()								{ return backgroundTransparency; }
-	public int getBackgroundTransparencyAlpha()							{ return (int) ((100 - backgroundTransparency) * 2.55); }
-	public void setBackgroundTransparency(int backgroundTransparency)	{ this.backgroundTransparency = backgroundTransparency; }
+	public int getLockscreenGravity()										{ return lockscreenGravity; }
+	public void setLockscreenGravity(int lockscreenGravity)					{ this.lockscreenGravity = lockscreenGravity; }
+
+	public int getBackgroundTransparency()									{ return backgroundTransparency; }
+	public int getBackgroundTransparencyAlpha()								{ return (int) ((100 - backgroundTransparency) * 2.55); }
+	public void setBackgroundTransparency(int backgroundTransparency)		{ this.backgroundTransparency = backgroundTransparency; }
 }

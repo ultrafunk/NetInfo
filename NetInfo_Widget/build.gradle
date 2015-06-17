@@ -8,8 +8,8 @@ android {
         applicationId "com.ultrafunk.network_info"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 16
-        versionName "1.5.5"
+        versionCode 17
+        versionName "1.5.6"
     }
     buildTypes {
         release {
