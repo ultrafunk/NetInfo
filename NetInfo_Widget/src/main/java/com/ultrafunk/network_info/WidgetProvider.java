@@ -88,12 +88,12 @@ public class WidgetProvider extends AppWidgetProvider
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF));
 			else
-				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getDataUsagePendingIntent(context));
+				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getDataUsagePendingIntent(context, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF)));
 
 			if (widgetConfig.getMobileDataSettingsScreen() == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
 				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS));
 			else
-				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getDataUsagePendingIntent(context));
+				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getDataUsagePendingIntent(context, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS)));
 
 			broadcastUpdateWidget(context, MobileDataStatusReceiver.class, appWidgetId);
 		}
@@ -150,7 +150,7 @@ public class WidgetProvider extends AppWidgetProvider
 		return PendingIntent.getBroadcast(context, 0, intent, 0);
 	}
 
-	private static PendingIntent getDataUsagePendingIntent(Context context)
+	private static PendingIntent getDataUsagePendingIntent(Context context, PendingIntent defaultPendingIntent)
 	{
 		Intent intent = new Intent();
 		intent.setClassName("com.android.settings", "com.android.settings.Settings$DataUsageSummaryActivity");
@@ -161,7 +161,7 @@ public class WidgetProvider extends AppWidgetProvider
 		if (resolveInfo != null)
 			return PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-		return getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF);
+		return defaultPendingIntent;
 	}
 
 	private static PendingIntent getSettingsPendingIntent(Context context, String action)

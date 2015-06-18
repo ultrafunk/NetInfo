@@ -23,6 +23,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 
+import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.R;
 
 import java.util.ArrayList;
@@ -40,6 +41,7 @@ public class SettingsScreenDialogFragment extends DialogFragment
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
 		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+		Bundle bundle = getArguments();
 
 		dialog.setTitle(getString(R.string.settings_screen));
 		dialog.setPositiveButton(getString(android.R.string.cancel), new PositiveButtonClickListener());
@@ -48,7 +50,9 @@ public class SettingsScreenDialogFragment extends DialogFragment
 		arrayList.add(getString(R.string.mobile_network_settings));
 		arrayList.add(getString(R.string.data_usage));
 
-		dialog.setSingleChoiceItems(arrayList.toArray(new CharSequence[arrayList.size()]), WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS, selectItemListener);
+		dialog.setSingleChoiceItems(arrayList.toArray(new CharSequence[arrayList.size()]),
+									bundle.getInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS),
+									selectItemListener);
 
 		return dialog.create();
 	}

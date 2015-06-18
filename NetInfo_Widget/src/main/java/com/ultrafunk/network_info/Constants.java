@@ -48,7 +48,7 @@ public class Constants
 	public static final String PREF_MOBILE_DATA_WIDGET			= "mobileDataWidget";
 	public static final String PREF_WIFI_WIDGET					= "wifiWidget";
 	public static final String PREF_LAYOUT_ID					= "layoutId";
-    public static final String PREF_MOBILE_DATA_SETTINGS_SCREEN	= "mobileDataSettingsScreen";
+	public static final String PREF_MOBILE_DATA_SETTINGS_SCREEN	= "mobileDataSettingsScreen";
 	public static final String PREF_LOCKSCREEN_GRAVITY			= "lockscreenGravity";
 	public static final String PREF_BACKGROUND_TRANSPARENCY		= "backgroundTransparency";
 }

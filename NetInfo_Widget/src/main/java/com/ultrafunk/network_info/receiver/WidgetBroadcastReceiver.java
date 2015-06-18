@@ -63,10 +63,7 @@ public abstract class WidgetBroadcastReceiver extends BroadcastReceiver
 		boolean mobileDataWidget = widgetOptions.getBoolean(Constants.PREF_MOBILE_DATA_WIDGET, false);
 		boolean wifiWidget = widgetOptions.getBoolean(Constants.PREF_WIFI_WIDGET, false);
 
-		if ((updateMobileDataViews == mobileDataWidget) || (updateWifiViews == wifiWidget))
-			return true;
-
-		return false;
+		return (updateMobileDataViews == mobileDataWidget) || (updateWifiViews == wifiWidget);
 	}
 
 	protected abstract void updateView(Context context, RemoteViews remoteViews, Bundle widgetOptions);

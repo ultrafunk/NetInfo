@@ -102,18 +102,19 @@
 
                 </RadioGroup>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@android:color/darker_gray" />
-
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/mobileSettingsScreenRelativeLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin" >
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@android:color/darker_gray" />
 
                 <LinearLayout
                     android:id="@+id/mobileSettingsScreenLinearLayout"
@@ -141,9 +142,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingBottom="14dp"
-                        android:clickable="true"
                         android:text="@string/mobile_network_settings"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:singleLine="true"
+                        android:ellipsize="end" />
 
                 </LinearLayout>
 
@@ -202,7 +204,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_toLeftOf="@+id/bgTransValTextView"
                     android:paddingBottom="10dp"
-                    android:paddingTop="15dp"
+                    android:paddingTop="18dp"
                     android:paddingLeft="16dp"
                     android:paddingRight="10dp"
                     android:singleLine="true"
@@ -213,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/bgTransValTextView"
                     android:layout_above="@+id/bgTransSeekBar"
-                    android:paddingTop="24dp"
+                    android:paddingTop="18dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"

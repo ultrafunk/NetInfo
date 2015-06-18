@@ -34,6 +34,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.util.EnabledWidgets;
 import com.ultrafunk.network_info.R;
 import com.ultrafunk.network_info.util.Utils;
@@ -98,16 +99,27 @@ public class ConfigActivity extends Activity implements SettingsScreenDialogFrag
 		{
 			public void onCheckedChanged(RadioGroup radioGroup, int checkedId)
 			{
+				RelativeLayout mobileSettingsScreenRelativeLayout = (RelativeLayout) findViewById(R.id.mobileSettingsScreenRelativeLayout);
+
 				widgetConfig.setBothWidgets(false);
 
 				if (checkedId == R.id.showBothRadioButton)
+				{
 					widgetConfig.setBothWidgets(true);
+					mobileSettingsScreenRelativeLayout.setVisibility(View.VISIBLE);
+				}
 
 				if (checkedId == R.id.showMobileRadioButton)
+				{
 					widgetConfig.setMobileDataWidget(true);
+					mobileSettingsScreenRelativeLayout.setVisibility(View.VISIBLE);
+				}
 
 				if (checkedId == R.id.showWifiRadioButton)
+				{
 					widgetConfig.setWifiWidget(true);
+					mobileSettingsScreenRelativeLayout.setVisibility(View.GONE);
+				}
 			}
 		});
 
@@ -118,6 +130,11 @@ public class ConfigActivity extends Activity implements SettingsScreenDialogFrag
 			public void onClick(View view)
 			{
 				DialogFragment dialogFragment = new SettingsScreenDialogFragment();
+
+				Bundle bundle = new Bundle();
+				bundle.putInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, widgetConfig.getMobileDataSettingsScreen());
+				dialogFragment.setArguments(bundle);
+
 				dialogFragment.show(getFragmentManager(), "SettingsScreenDialogFragment");
 			}
 		});
@@ -215,12 +232,12 @@ public class ConfigActivity extends Activity implements SettingsScreenDialogFrag
 
 		if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
 		{
-			widgetConfig.setMobileDataSettingsScreen(WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS);
+			widgetConfig.setMobileDataSettingsScreen(selected);
 			mobileCurrentSettingsScreenTextView.setText(getString(R.string.mobile_network_settings));
 		}
 		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE)
 		{
-			widgetConfig.setMobileDataSettingsScreen(WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE);
+			widgetConfig.setMobileDataSettingsScreen(selected);
 			mobileCurrentSettingsScreenTextView.setText(getString(R.string.data_usage));
 		}
 	}
