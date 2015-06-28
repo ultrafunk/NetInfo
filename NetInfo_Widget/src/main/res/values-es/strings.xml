@@ -27,8 +27,8 @@
     <string name="error_mobile_data_on_flight_mode">No se pueden activar los datos móviles mientras el modo avión esté activado.</string>
     <string name="homescreen_configuration">Configuración de la pantalla de inicio</string>
     <string name="lockscreen_configuration">Configuración de la pantalla de bloqueo</string>
-    <string name="data_usage">Data usage</string>
-    <string name="mobile_data_settings_screen">Mobile data settings screen</string>
-    <string name="mobile_network_settings">Mobile network settings</string>
-    <string name="settings_screen">Settings screen</string>
+    <string name="data_usage">Uso de datos</string>
+    <string name="mobile_data_settings_screen">Pantalla de configuración de datos móviles</string>
+    <string name="mobile_network_settings">Configuración de datos móviles</string>
+    <string name="settings_screen">Pantalla de configuración</string>
 </resources>
