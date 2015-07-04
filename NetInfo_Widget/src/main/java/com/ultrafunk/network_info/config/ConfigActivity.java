@@ -16,14 +16,14 @@
 
 package com.ultrafunk.network_info.config;
 
-import android.app.Activity;
-import android.app.DialogFragment;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProviderInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +40,7 @@ import com.ultrafunk.network_info.R;
 import com.ultrafunk.network_info.util.Utils;
 import com.ultrafunk.network_info.WidgetProvider;
 
-public class ConfigActivity extends Activity implements SettingsScreenDialogFragment.SettingsScreenDialogListener
+public class ConfigActivity extends ActionBarActivity implements SettingsScreenDialogFragment.DialogListener
 {
 	private AppWidgetManager appAppWidgetManager;
 	private WidgetConfig widgetConfig;
@@ -135,7 +135,7 @@ public class ConfigActivity extends Activity implements SettingsScreenDialogFrag
 				bundle.putInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, widgetConfig.getMobileDataSettingsScreen());
 				dialogFragment.setArguments(bundle);
 
-				dialogFragment.show(getFragmentManager(), "SettingsScreenDialogFragment");
+				dialogFragment.show(getSupportFragmentManager(), "SettingsScreenDialogFragment");
 			}
 		});
 

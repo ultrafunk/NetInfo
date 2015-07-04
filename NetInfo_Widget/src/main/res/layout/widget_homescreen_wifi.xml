@@ -18,24 +18,26 @@
         android:background="?android:selectableItemBackground" >
 
         <TextView
-            android:id="@+id/wifiTextView"
+            android:id="@+id/wifiNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/wifi"
             android:includeFontPadding="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/wifiStateImageView"
+            android:paddingRight="6dp"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="end" />
 
-        <TextView
-            android:id="@+id/wifiOnOffTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/medium_gray"
-            android:includeFontPadding="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/wifiStateImageView"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_signal_wifi_off"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
@@ -45,8 +47,7 @@
         android:layout_height="1dp"
         android:layout_below="@+id/wifiOnOffRelativeLayout"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/white" />
+        android:layout_marginRight="8dp" />
 
     <RelativeLayout
         android:id="@+id/wifiChangeRelativeLayout"
@@ -62,23 +63,22 @@
         android:background="?android:selectableItemBackground" >
 
         <TextView
-            android:id="@+id/wifiNameTextView"
+            android:id="@+id/wifiInfoTopTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:includeFontPadding="false"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_horizontal" />
 
         <TextView
-            android:id="@+id/wifiDetailsTextView"
+            android:id="@+id/wifiInfoBottomTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/wifiNameTextView"
+            android:layout_below="@+id/wifiInfoTopTextView"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:includeFontPadding="false"
-            android:textColor="@color/medium_gray"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_horizontal" />

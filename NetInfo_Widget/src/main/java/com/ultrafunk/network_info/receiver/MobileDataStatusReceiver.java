@@ -94,11 +94,20 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		{
 			String simOperatorName = telephonyManager.getSimOperatorName();
 
-			if ((simOperatorName != null) && !simOperatorName.isEmpty())
+			if ((simOperatorName != null) && !simOperatorName.isEmpty() && !simOperatorName.equalsIgnoreCase(networkOperatorName))
 				return networkOperatorName + " - " + simOperatorName;
 		}
 
 		return networkOperatorName;
+	}
+
+	private void setStateColor(Context context, RemoteViews remoteViews, boolean state)
+	{
+		int color = (state == STATE_ON) ? context.getResources().getColor(android.R.color.white) : context.getResources().getColor(R.color.medium_gray);
+		remoteViews.setTextColor(R.id.mobileNameTextView, color);
+		remoteViews.setInt(R.id.mobileHeaderSpacerTextView, "setBackgroundColor", color);
+		remoteViews.setTextColor(R.id.mobileInfoTopTextView, color);
+		remoteViews.setTextColor(R.id.mobileInfoBottomTextView, color);
 	}
 
 	@Override
@@ -106,50 +115,48 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 	{
 		if (isMobileDataEnabled && isOutOfService)
 		{
-			remoteViews.setTextColor(R.id.mobileOnOffTextView, context.getResources().getColor(R.color.light_green));
-			remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.on));
-			remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.no_service));
-			remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.GONE);
+			setStateColor(context, remoteViews, STATE_ON);
+			remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.mobile_data));
+			remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_enabled);
+			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
+			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.no_service));
+			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.GONE);
 			return;
 		}
 
 		if (dataState == TelephonyManager.DATA_DISCONNECTED)
 		{
-			remoteViews.setTextColor(R.id.mobileOnOffTextView, context.getResources().getColor(R.color.medium_gray));
-			remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
-			remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.VISIBLE);
+			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
+			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.GONE);
 
 			if (isMobileDataEnabled && !isAirplaneModeOn)
 			{
-				remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.on));
-				remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.not_connected));
-				remoteViews.setTextViewText(R.id.mobileDetailsTextView, networkOperatorAndServiceProvider);
+				setStateColor(context, remoteViews, STATE_ON);
+				remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
+				remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_enabled);
+				remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.not_connected));
 			}
 			else
 			{
-				remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.off));
+				setStateColor(context, remoteViews, STATE_OFF);
+				remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.mobile_data));
+				remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_off);
 
 				if (isAirplaneModeOn)
-				{
-					remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.flight_mode));
-					remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.GONE);
-				}
+					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.flight_mode));
 				else
-				{
-					remoteViews.setViewVisibility(R.id.mobileNameTextView, View.GONE);
-					remoteViews.setTextViewText(R.id.mobileDetailsTextView, context.getString(R.string.tap_to_change));
-				}
+					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.tap_to_change));
 			}
 		}
 		else
 		{
-			remoteViews.setTextColor(R.id.mobileOnOffTextView, context.getResources().getColor(R.color.light_green));
-			remoteViews.setTextViewText(R.id.mobileOnOffTextView, context.getString(R.string.on));
-			remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
+			setStateColor(context, remoteViews, STATE_ON);
 			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
-			remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileDetailsTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - ".concat(context.getString(R.string.roaming)) : ""));
+			remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_on);
+			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
+			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager));
+			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, (isRoaming ? View.VISIBLE : View.GONE));
+			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView,  (isRoaming ? context.getString(R.string.roaming) : ""));
 		}
 	}
 }

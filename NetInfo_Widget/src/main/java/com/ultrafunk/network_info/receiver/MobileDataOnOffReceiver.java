@@ -83,8 +83,8 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 	@Override
 	protected void updateView(Context context, RemoteViews remoteViews, Bundle widgetOptions)
 	{
-		remoteViews.setViewVisibility(R.id.mobileDetailsTextView, View.GONE);
-		remoteViews.setViewVisibility(R.id.mobileNameTextView, View.VISIBLE);
-		remoteViews.setTextViewText(R.id.mobileNameTextView, turningOn ? context.getString(R.string.turning_on) : context.getString(R.string.turning_off));
+		remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.GONE);
+		remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
+		remoteViews.setTextViewText(R.id.mobileInfoTopTextView, turningOn ? context.getString(R.string.turning_on) : context.getString(R.string.turning_off));
 	}
 }

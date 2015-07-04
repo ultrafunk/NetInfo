@@ -18,24 +18,26 @@
         android:background="?android:selectableItemBackground" >
 
         <TextView
-            android:id="@+id/mobileTextView"
+            android:id="@+id/mobileNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/mobile"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/mobile_data"
             android:includeFontPadding="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true" />
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/mobileStateImageView"
+            android:paddingRight="6dp"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:ellipsize="end" />
 
-        <TextView
-            android:id="@+id/mobileOnOffTextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@color/medium_gray"
-            android:includeFontPadding="false"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true" />
+        <ImageView
+            android:id="@+id/mobileStateImageView"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:src="@drawable/ic_signal_cellular_off"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true" />
 
     </RelativeLayout>
 
@@ -45,8 +47,7 @@
         android:layout_height="1dp"
         android:layout_below="@+id/mobileOnOffRelativeLayout"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:background="@android:color/white" />
+        android:layout_marginRight="8dp" />
 
     <RelativeLayout
         android:id="@+id/mobileChangeRelativeLayout"
@@ -62,23 +63,22 @@
         android:background="?android:selectableItemBackground" >
 
         <TextView
-            android:id="@+id/mobileNameTextView"
+            android:id="@+id/mobileInfoTopTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:includeFontPadding="false"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_horizontal" />
 
         <TextView
-            android:id="@+id/mobileDetailsTextView"
+            android:id="@+id/mobileInfoBottomTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/mobileNameTextView"
+            android:layout_below="@+id/mobileInfoTopTextView"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:includeFontPadding="false"
-            android:textColor="@color/medium_gray"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_horizontal" />

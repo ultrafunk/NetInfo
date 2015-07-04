@@ -15,7 +15,7 @@
 
         <activity
             android:name=".config.ConfigActivity"
-            android:theme="@android:style/Theme.Holo.Light" >
+            android:theme="@style/AppTheme" >
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
             </intent-filter>

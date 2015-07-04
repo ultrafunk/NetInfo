@@ -67,8 +67,8 @@ public class WifiOnOffReceiver extends WidgetBroadcastReceiver
 	@Override
 	protected void updateView(Context context, RemoteViews remoteViews, Bundle widgetOptions)
 	{
-		remoteViews.setViewVisibility(R.id.wifiDetailsTextView, View.GONE);
-		remoteViews.setViewVisibility(R.id.wifiNameTextView, View.VISIBLE);
-		remoteViews.setTextViewText(R.id.wifiNameTextView, turningOn ? context.getString(R.string.turning_on) : context.getString(R.string.turning_off));
+		remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, View.GONE);
+		remoteViews.setViewVisibility(R.id.wifiInfoTopTextView, View.VISIBLE);
+		remoteViews.setTextViewText(R.id.wifiInfoTopTextView, turningOn ? context.getString(R.string.turning_on) : context.getString(R.string.turning_off));
 	}
 }

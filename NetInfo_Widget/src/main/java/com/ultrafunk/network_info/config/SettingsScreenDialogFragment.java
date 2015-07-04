@@ -17,11 +17,12 @@
 package com.ultrafunk.network_info.config;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
+import android.support.v7.app.AlertDialog;
+
 
 import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.R;
@@ -30,17 +31,17 @@ import java.util.ArrayList;
 
 public class SettingsScreenDialogFragment extends DialogFragment
 {
-	public interface SettingsScreenDialogListener
+	public interface DialogListener
 	{
 		void onDialogSelectionChanged(int selected);
 	}
 
-	SettingsScreenDialogListener mListener;
+	DialogListener mListener;
 
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
 		Bundle bundle = getArguments();
 
 		dialog.setTitle(getString(R.string.settings_screen));
@@ -61,7 +62,7 @@ public class SettingsScreenDialogFragment extends DialogFragment
 	public void onAttach(Activity activity)
 	{
 		super.onAttach(activity);
-		mListener = (SettingsScreenDialogListener) activity;
+		mListener = (DialogListener) activity;
 	}
 
 	class PositiveButtonClickListener implements DialogInterface.OnClickListener

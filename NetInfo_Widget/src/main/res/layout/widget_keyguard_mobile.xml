@@ -21,29 +21,28 @@
             android:background="?android:selectableItemBackground" >
 
             <TextView
-                android:id="@+id/mobileTextView"
+                android:id="@+id/mobileNameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="10dp"
-                android:paddingBottom="8dp"
-                android:textSize="@dimen/textAppearanceExtraLarge"
-                android:textColor="@android:color/white"
+                android:paddingBottom="10dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/mobile_data"
                 android:includeFontPadding="false"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentLeft="true" />
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/mobileStateImageView"
+                android:paddingRight="12dp"
+                android:singleLine="true"
+                android:ellipsize="end" />
 
-            <TextView
-                android:id="@+id/mobileOnOffTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="10dp"
-                android:paddingBottom="8dp"
-                android:textSize="@dimen/textAppearanceExtraLarge"
-                android:textColor="@color/medium_gray"
-                android:includeFontPadding="false"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentRight="true" />
+            <ImageView
+                android:id="@+id/mobileStateImageView"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_signal_cellular_off"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 
@@ -53,8 +52,7 @@
             android:layout_height="1dp"
             android:layout_below="@+id/mobileOnOffRelativeLayout"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@android:color/white" />
+            android:layout_marginRight="20dp" />
 
         <RelativeLayout
             android:id="@+id/mobileChangeRelativeLayout"
@@ -68,25 +66,24 @@
             android:background="?android:selectableItemBackground" >
 
             <TextView
-                android:id="@+id/mobileNameTextView"
+                android:id="@+id/mobileInfoTopTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textAppearance="?android:attr/textAppearanceMedium"
                 android:includeFontPadding="false"
-                android:paddingBottom="5dp"
+                android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
 
             <TextView
-                android:id="@+id/mobileDetailsTextView"
+                android:id="@+id/mobileInfoBottomTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/mobileNameTextView"
+                android:layout_below="@+id/mobileInfoTopTextView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:includeFontPadding="false"
-                android:paddingBottom="5dp"
-                android:textColor="@color/medium_gray"
+                android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />

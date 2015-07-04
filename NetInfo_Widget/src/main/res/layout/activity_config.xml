@@ -53,7 +53,7 @@
                         android:text="@string/mobile_data_2_1"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:button="@null"
-                        android:drawableRight="@drawable/btn_radio_holo_light"
+                        android:drawableRight="@drawable/btn_radio_material"
                         android:background="?android:selectableItemBackground"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -73,7 +73,7 @@
                         android:text="@string/wifi_2_1"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:button="@null"
-                        android:drawableRight="@drawable/btn_radio_holo_light"
+                        android:drawableRight="@drawable/btn_radio_material"
                         android:background="?android:selectableItemBackground"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -93,7 +93,7 @@
                         android:text="@string/mobile_and_wifi_2_2"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:button="@null"
-                        android:drawableRight="@drawable/btn_radio_holo_light"
+                        android:drawableRight="@drawable/btn_radio_material"
                         android:background="?android:selectableItemBackground"
                         android:paddingTop="8dp"
                         android:paddingBottom="8dp"
@@ -134,6 +134,7 @@
                         android:paddingBottom="3dp"
                         android:text="@string/mobile_data_settings_screen"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/black"
                         android:singleLine="true"
                         android:ellipsize="end" />
 
@@ -144,8 +145,7 @@
                         android:paddingBottom="14dp"
                         android:text="@string/mobile_network_settings"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:singleLine="true"
-                        android:ellipsize="end" />
+                        android:textColor="@android:color/black" />
 
                 </LinearLayout>
 
@@ -178,6 +178,7 @@
                     android:clickable="true"
                     android:text="@string/center_vertically"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
                     android:background="?android:selectableItemBackground" />
 
             </RelativeLayout>
@@ -199,6 +200,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/bg_transparency"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
                     android:id="@+id/bgTransTextView"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentLeft="true"

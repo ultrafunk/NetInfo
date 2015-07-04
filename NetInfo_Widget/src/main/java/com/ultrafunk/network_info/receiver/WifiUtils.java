@@ -25,6 +25,11 @@ import com.ultrafunk.network_info.R;
 
 public class WifiUtils
 {
+	public static String getIpAddressString(int ipAddress)
+	{
+		return String.format("IP: %d.%d.%d.%d",	(ipAddress & 0xff),	(ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+	}
+
 	public static String getSecurityString(Context context, WifiManager wifiManager, String connectedBSSID)
 	{
 		ScanResult connectedScanResult = null;
