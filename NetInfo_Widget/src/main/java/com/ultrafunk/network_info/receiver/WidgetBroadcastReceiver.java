@@ -28,8 +28,8 @@ import com.ultrafunk.network_info.WidgetProvider;
 
 public abstract class WidgetBroadcastReceiver extends BroadcastReceiver
 {
-	protected static boolean STATE_OFF = false;
-	protected static boolean STATE_ON  = true;
+	protected static final int STATE_OFF = 0;
+	protected static final int STATE_ON  = 1;
 
 	protected boolean updateMobileDataViews = false;
 	protected boolean updateWifiViews = false;

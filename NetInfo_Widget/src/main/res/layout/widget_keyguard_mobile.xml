@@ -70,8 +70,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:includeFontPadding="false"
-                android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
@@ -82,8 +80,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/mobileInfoTopTextView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:includeFontPadding="false"
-                android:paddingBottom="3dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />

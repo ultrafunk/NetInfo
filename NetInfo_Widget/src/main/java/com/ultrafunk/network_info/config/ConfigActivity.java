@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +40,7 @@ import com.ultrafunk.network_info.R;
 import com.ultrafunk.network_info.util.Utils;
 import com.ultrafunk.network_info.WidgetProvider;
 
-public class ConfigActivity extends ActionBarActivity implements SettingsScreenDialogFragment.DialogListener
+public class ConfigActivity extends AppCompatActivity implements SettingsScreenDialogFragment.DialogListener
 {
 	private AppWidgetManager appAppWidgetManager;
 	private WidgetConfig widgetConfig;
@@ -124,6 +124,7 @@ public class ConfigActivity extends ActionBarActivity implements SettingsScreenD
 		});
 
 		LinearLayout mobileSettingsScreenLinearLayout = (LinearLayout) findViewById(R.id.mobileSettingsScreenLinearLayout);
+		onDialogSelectionChanged(widgetConfig.getMobileDataSettingsScreen());
 		mobileSettingsScreenLinearLayout.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -223,6 +224,13 @@ public class ConfigActivity extends ActionBarActivity implements SettingsScreenD
 				finish();
 			}
 		});
+	}
+
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		widgetConfig.write(appWidgetId);
 	}
 
 	@Override

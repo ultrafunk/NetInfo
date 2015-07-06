@@ -10,7 +10,7 @@
     <string name="mobile_data_2_1">Datos móviles (2 x 1)</string>
     <string name="no_service">sin servicio</string>
     <string name="not_connected">no conectado</string>
-    <string name="roaming">Itinerancia</string>
+    <string name="roaming">itinerancia</string>
     <string name="tap_to_change">toca para cambiar</string>
     <string name="unknown_network">red desconocida</string>
     <string name="wifi">Wi-Fi</string>
@@ -28,4 +28,7 @@
     <string name="mobile_data_settings_screen">Pantalla de configuración de datos móviles</string>
     <string name="mobile_network_settings">Configuración de datos móviles</string>
     <string name="settings_screen">Pantalla de configuración</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="week">week</string>
 </resources>

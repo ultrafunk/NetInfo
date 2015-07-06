@@ -101,7 +101,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		return networkOperatorName;
 	}
 
-	private void setStateColor(Context context, RemoteViews remoteViews, boolean state)
+	private void setStateColor(Context context, RemoteViews remoteViews, int state)
 	{
 		int color = (state == STATE_ON) ? context.getResources().getColor(android.R.color.white) : context.getResources().getColor(R.color.medium_gray);
 		remoteViews.setTextColor(R.id.mobileNameTextView, color);
@@ -154,9 +154,9 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
 			remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_on);
 			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager));
-			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, (isRoaming ? View.VISIBLE : View.GONE));
-			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView,  (isRoaming ? context.getString(R.string.roaming) : ""));
+			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - ".concat(context.getString(R.string.roaming)) : ""));
+			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.VISIBLE);
+			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsage(context));
 		}
 	}
 }

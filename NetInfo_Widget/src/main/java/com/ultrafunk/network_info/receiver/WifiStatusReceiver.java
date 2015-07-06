@@ -123,7 +123,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 			detailsString = context.getString(R.string.security) + ": " + securityString;
 	}
 
-	private void setStateColor(Context context, RemoteViews remoteViews, boolean state)
+	private void setStateColor(Context context, RemoteViews remoteViews, int state)
 	{
 		int color = (state == STATE_ON) ? context.getResources().getColor(android.R.color.white) : context.getResources().getColor(R.color.medium_gray);
 		remoteViews.setTextColor(R.id.wifiNameTextView, color);
