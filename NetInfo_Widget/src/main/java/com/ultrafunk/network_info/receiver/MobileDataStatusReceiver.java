@@ -59,7 +59,8 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 		if (Constants.ACTION_DATA_CONNECTION_CHANGED.equals(action) ||
 			Constants.ACTION_DATA_STATE_CHANGED.equals(action) ||
-			Constants.ACTION_SERVICE_STATE_CHANGED.equals(action))
+			Constants.ACTION_SERVICE_STATE_CHANGED.equals(action) ||
+			Intent.ACTION_SCREEN_ON.equals(action))
 		{
 			partiallyUpdateWidgets(context);
 		}
@@ -156,7 +157,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
 			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - ".concat(context.getString(R.string.roaming)) : ""));
 			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsage(context));
+			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsageString(context));
 		}
 	}
 }

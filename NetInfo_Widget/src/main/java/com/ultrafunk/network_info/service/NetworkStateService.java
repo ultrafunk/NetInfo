@@ -172,6 +172,8 @@ public class NetworkStateService extends Service
 		intentFilter.addAction(Constants.ACTION_DATA_STATE_CHANGED);
 		localBroadcastManager.registerReceiver(mobileDataStatusReceiver, intentFilter);
 
+		registerReceiver(mobileDataStatusReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));
+
 		telephonyManager.listen(mobileDataStateListener, PhoneStateListener.LISTEN_DATA_CONNECTION_STATE | PhoneStateListener.LISTEN_SERVICE_STATE);
 		getContentResolver().registerContentObserver(mobileDataSettingUri, false, mobileDataSettingObserver);
 	}
@@ -187,6 +189,7 @@ public class NetworkStateService extends Service
 			mobileDataSettingObserver = null;
 
 			localBroadcastManager.unregisterReceiver(mobileDataStatusReceiver);
+			unregisterReceiver(mobileDataStatusReceiver);
 			mobileDataStatusReceiver = null;
 		}
 	}

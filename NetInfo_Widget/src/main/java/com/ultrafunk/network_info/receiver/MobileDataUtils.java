@@ -102,15 +102,35 @@ public class MobileDataUtils
 		return "Unknown";
 	}
 
-	public static String getDataUsage(Context context)
+	public static String getDataUsageString(Context context)
 	{
 		long dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
+
+		// Ugly hack to get around a known bug in Android 5.x:
+		// https://code.google.com/p/android/issues/detail?id=78924
+		if (dataUsageBytes == 0)
+		{
+			try
+			{
+				Thread.sleep(50);
+				dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
+			}
+			catch (Exception e)
+			{
+			}
+		}
+
+		if (dataUsageBytes == 0)
+			return context.getString(R.string.no_data_usage);
+
 		long elapsedTime = SystemClock.elapsedRealtime();
 		int hours = (int) (elapsedTime / (1000 * 60 * 60));
-		long usagePerHour = dataUsageBytes / hours;
 
 		if (hours < 1)
 			return String.format("~ %s", Utils.readableSize(dataUsageBytes));
+
+		// Avoid division by zero
+		long usagePerHour = dataUsageBytes / hours;
 
 		if (hours < 24)
 			return String.format("~ %s / %s", Utils.readableSize(usagePerHour), context.getString(R.string.hour));

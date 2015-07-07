@@ -21,6 +21,7 @@
     <string name="hour">hour</string>
     <string name="day">day</string>
     <string name="week">week</string>
+    <string name="no_data_usage">no data usage</string>
 
     <string name="security">Security</string>
     <string name="no_network">no network</string>

@@ -219,6 +219,7 @@
                     android:layout_above="@+id/bgTransSeekBar"
                     android:paddingTop="18dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@android:color/black"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true"
                     android:paddingRight="14dp" />
