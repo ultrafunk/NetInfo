@@ -44,7 +44,6 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onDisabled(Context context)
 	{
 		super.onDisabled(context);
-	//	Log.e(this.getClass().getSimpleName(), "onDisabled()");
 		setReceiversAndServiceState(context);
 	}
 
@@ -52,7 +51,6 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onDeleted(Context context, int[] appWidgetIds)
 	{
 		super.onDeleted(context, appWidgetIds);
-	//	Log.e(this.getClass().getSimpleName(), "onDeleted()");
 		setReceiversAndServiceState(context);
 	}
 
@@ -60,8 +58,6 @@ public class WidgetProvider extends AppWidgetProvider
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds)
 	{
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-
-	//	Log.e(this.getClass().getSimpleName(), "onUpdate()");
 
 		WidgetConfig widgetConfig = new WidgetConfig(context);
 
@@ -111,7 +107,7 @@ public class WidgetProvider extends AppWidgetProvider
 
 	private void setReceiversAndServiceState(Context context)
 	{
-		EnabledWidgets enabledWidgets = Utils.GetEnabledWidgets(context, AppWidgetManager.getInstance(context));
+		EnabledWidgets enabledWidgets = Utils.getEnabledWidgets(context, AppWidgetManager.getInstance(context));
 		enableDisableReceivers(context, enabledWidgets);
 		startStopService(context, enabledWidgets);
 	}

@@ -55,6 +55,7 @@ public class NetworkStateService extends Service
 
 	private static boolean isMobileOutOfService = false;
 	private static String wifiSecurityString = null;
+	private static boolean isWaitingForDataUsage = false;
 
 	@Override
 	public void onCreate()
@@ -72,7 +73,7 @@ public class NetworkStateService extends Service
 		else
 			mobileDataSettingUri = Uri.withAppendedPath(Settings.Global.CONTENT_URI, "mobile_data");
 
-		initEnabledWidgets(Utils.GetEnabledWidgets(this, AppWidgetManager.getInstance(this)));
+		initEnabledWidgets(Utils.getEnabledWidgets(this, AppWidgetManager.getInstance(this)));
 	}
 
 	@Override
@@ -119,6 +120,19 @@ public class NetworkStateService extends Service
 						}
 					}, 3 * 1000);
 				}
+				else if (Constants.ACTION_DATA_CONNECTED.equals(action))
+				{
+					handler.postDelayed(new Runnable()
+					{
+						public void run()
+						{
+							isWaitingForDataUsage = false;
+
+							if (telephonyManager.getDataState() == TelephonyManager.DATA_CONNECTED)
+								localBroadcastManager.sendBroadcastSync(new Intent(Constants.ACTION_DATA_USAGE_UPDATE));
+						}
+					}, 500);
+				}
 			}
 		}
 
@@ -142,11 +156,14 @@ public class NetworkStateService extends Service
 		return null;
 	}
 
-	public static boolean isMobileOutOfService() 						{ return isMobileOutOfService; }
-	public static void setMobileOutOfService(boolean isOutOfService)	{ NetworkStateService.isMobileOutOfService = isOutOfService; }
+	public static boolean isMobileOutOfService() 								{ return isMobileOutOfService; }
+	public static void setMobileOutOfService(boolean isOutOfService)			{ NetworkStateService.isMobileOutOfService = isOutOfService; }
 
-	public static String getWifiSecurityString() 						{ return wifiSecurityString; }
-	public static void setWifiSecurityString(String wifiSecurityString) { NetworkStateService.wifiSecurityString = wifiSecurityString; }
+	public static String getWifiSecurityString() 								{ return wifiSecurityString; }
+	public static void setWifiSecurityString(String wifiSecurityString) 		{ NetworkStateService.wifiSecurityString = wifiSecurityString; }
+
+	public static boolean isWaitingForDataUsage()								{ return isWaitingForDataUsage; }
+	public static void setWaitingForDataUsage(boolean isWaitingForDataUsage)	{ NetworkStateService.isWaitingForDataUsage = isWaitingForDataUsage; }
 
 	private void initEnabledWidgets(EnabledWidgets enabledWidgets)
 	{
@@ -170,6 +187,7 @@ public class NetworkStateService extends Service
 		intentFilter.addAction(Constants.ACTION_SERVICE_STATE_CHANGED);
 		intentFilter.addAction(Constants.ACTION_DATA_CONNECTION_CHANGED);
 		intentFilter.addAction(Constants.ACTION_DATA_STATE_CHANGED);
+		intentFilter.addAction(Constants.ACTION_DATA_USAGE_UPDATE);
 		localBroadcastManager.registerReceiver(mobileDataStatusReceiver, intentFilter);
 
 		registerReceiver(mobileDataStatusReceiver, new IntentFilter(Intent.ACTION_SCREEN_ON));

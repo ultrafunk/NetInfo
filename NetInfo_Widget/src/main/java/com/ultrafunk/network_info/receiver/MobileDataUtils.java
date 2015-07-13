@@ -18,7 +18,6 @@ package com.ultrafunk.network_info.receiver;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
-import android.net.TrafficStats;
 import android.os.Build;
 import android.os.SystemClock;
 import android.provider.Settings;
@@ -26,9 +25,9 @@ import android.telephony.TelephonyManager;
 import android.widget.Toast;
 
 import com.ultrafunk.network_info.R;
-import com.ultrafunk.network_info.util.Utils;
 
 import java.lang.reflect.Method;
+import java.text.DecimalFormat;
 
 public class MobileDataUtils
 {
@@ -83,63 +82,58 @@ public class MobileDataUtils
 	{
 		switch (telephonyManager.getNetworkType())
 		{
-			case TelephonyManager.NETWORK_TYPE_GPRS:	return "GPRS 2G"; 		// "GPRS 2G ~ 50 kbps"; 	// NETWORK_TYPE_GPRS ~ 100 kbps
-			case TelephonyManager.NETWORK_TYPE_EDGE:	return "EDGE 2G"; 		// "EDGE 2.5G ~ 100 kbps";	// NETWORK_TYPE_EDGE ~ 50-100 kbps
-			case TelephonyManager.NETWORK_TYPE_UMTS:	return "UMTS 3G"; 		// "UMTS 3G ~ 1 Mbps";		// NETWORK_TYPE_UMTS ~ 400-7000 kbps
-			case TelephonyManager.NETWORK_TYPE_CDMA:	return "CDMA 3G"; 		// "CDMA 2G ~ 64 kbps";		// NETWORK_TYPE_CDMA ~ 14-64 kbps
-			case TelephonyManager.NETWORK_TYPE_EVDO_0:	return "EVDO 0 3G"; 	// "EVDO 0 3G ~ 700 kbps";	// NETWORK_TYPE_EVDO_0 ~ 400-1000 kbps
-			case TelephonyManager.NETWORK_TYPE_EVDO_A:	return "EVDO A 3G"; 	// "EVDO A 3G ~ 1 Mbps";	// NETWORK_TYPE_EVDO_A ~ 600-1400 kbps
-			case TelephonyManager.NETWORK_TYPE_EVDO_B:	return "EVDO B 3G";		// "EVDO B 3G ~ 5 Mbps";	// NETWORK_TYPE_EVDO_B ~ 5 Mbps
-			case TelephonyManager.NETWORK_TYPE_1xRTT:	return "1xRTT 3G";		// "1xRTT 3G ~ 100 kbps";	// NETWORK_TYPE_1xRTT ~ 50-100 kbps
-			case TelephonyManager.NETWORK_TYPE_HSDPA:	return "HSDPA 3G";		// "HSDPA 3G ~ 2-12 Mbps";	// NETWORK_TYPE_HSDPA ~ 2-14 Mbps
-			case TelephonyManager.NETWORK_TYPE_HSUPA:	return "HSUPA 3G";		// "HSUPA 3G ~ 1-20 Mbps";	// NETWORK_TYPE_HSUPA ~ 1-23 Mbps
-			case TelephonyManager.NETWORK_TYPE_HSPA:	return "HSPA 3G"; 		// "HSPA 3G ~ 1.3 Mbps";	// NETWORK_TYPE_HSPA ~ 700-1700 kbps
-			case TelephonyManager.NETWORK_TYPE_LTE:		return "LTE 4G"; 		// "LTE 4G ~ 10+ Mbps";		// NETWORK_TYPE_LTE ~ 10+ Mbps
-			case TelephonyManager.NETWORK_TYPE_EHRPD:	return "eHRPD 3/4G"; 	// "eHRPD 3/4G ~ 1.5 Mbps";	// NETWORK_TYPE_EHRPD ~ 1-2 Mbps
-			case TelephonyManager.NETWORK_TYPE_HSPAP:	return "HSPA+ 3G"; 		// "HSPA+ 4G ~ 10+ Mbps";	// NETWORK_TYPE_HSPAP ~ 10-20 Mbps
+			case TelephonyManager.NETWORK_TYPE_GPRS:	return "GPRS 2G";
+			case TelephonyManager.NETWORK_TYPE_EDGE:	return "EDGE 2G";
+			case TelephonyManager.NETWORK_TYPE_UMTS:	return "UMTS 3G";
+			case TelephonyManager.NETWORK_TYPE_CDMA:	return "CDMA 3G";
+			case TelephonyManager.NETWORK_TYPE_EVDO_0:	return "EVDO 0 3G";
+			case TelephonyManager.NETWORK_TYPE_EVDO_A:	return "EVDO A 3G";
+			case TelephonyManager.NETWORK_TYPE_EVDO_B:	return "EVDO B 3G";
+			case TelephonyManager.NETWORK_TYPE_1xRTT:	return "1xRTT 3G";
+			case TelephonyManager.NETWORK_TYPE_HSDPA:	return "HSDPA 3G";
+			case TelephonyManager.NETWORK_TYPE_HSUPA:	return "HSUPA 3G";
+			case TelephonyManager.NETWORK_TYPE_HSPA:	return "HSPA 3G";
+			case TelephonyManager.NETWORK_TYPE_LTE:		return "LTE 4G";
+			case TelephonyManager.NETWORK_TYPE_EHRPD:	return "eHRPD 3/4G";
+			case TelephonyManager.NETWORK_TYPE_HSPAP:	return "HSPA+ 3G";
 		}
 
 		return "Unknown";
 	}
 
-	public static String getDataUsageString(Context context)
+	private static String readableSize(long size)
 	{
-		long dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
+		if(size <= 0)
+			return "0";
 
-		// Ugly hack to get around a known bug in Android 5.x:
-		// https://code.google.com/p/android/issues/detail?id=78924
-		if (dataUsageBytes == 0)
-		{
-			try
-			{
-				Thread.sleep(50);
-				dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
-			}
-			catch (Exception e)
-			{
-			}
-		}
+		final String[] units = new String[] { "bytes", "KB", "MB", "GB", "TB" };
+		int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
 
-		if (dataUsageBytes == 0)
+		return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
+	}
+
+	public static String getDataUsageString(Context context, long dataUsageBytes)
+	{
+		if (dataUsageBytes <= 0)
 			return context.getString(R.string.no_data_usage);
 
 		long elapsedTime = SystemClock.elapsedRealtime();
 		int hours = (int) (elapsedTime / (1000 * 60 * 60));
 
 		if (hours < 1)
-			return String.format("~ %s", Utils.readableSize(dataUsageBytes));
+			return String.format("~ %s", readableSize(dataUsageBytes));
 
 		// Avoid division by zero
 		long usagePerHour = dataUsageBytes / hours;
 
 		if (hours < 24)
-			return String.format("~ %s / %s", Utils.readableSize(usagePerHour), context.getString(R.string.hour));
+			return String.format("~ %s / %s", readableSize(usagePerHour), context.getString(R.string.hour));
 
 		int days = hours / 24;
 
 		if (days < 7)
-			return String.format("~ %s / %s", Utils.readableSize(usagePerHour * 24), context.getString(R.string.day));
+			return String.format("~ %s / %s", readableSize(usagePerHour * 24), context.getString(R.string.day));
 
-		return String.format("~ %s / %s", Utils.readableSize(usagePerHour * 24 * 7), context.getString(R.string.week));
+		return String.format("~ %s / %s", readableSize(usagePerHour * 24 * 7), context.getString(R.string.week));
 	}
 }

@@ -49,8 +49,6 @@ public class MobileDataStateListener extends PhoneStateListener
 	@Override
 	public void onServiceStateChanged(ServiceState serviceState)
 	{
-	//	Log.e(this.getClass().getSimpleName(), "onServiceStateChanged(): " + serviceState.getState());
-
 		switch (serviceState.getState())
 		{
 			case ServiceState.STATE_EMERGENCY_ONLY:

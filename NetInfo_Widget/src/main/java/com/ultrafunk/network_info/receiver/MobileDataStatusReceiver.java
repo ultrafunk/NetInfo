@@ -21,6 +21,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.TrafficStats;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.view.View;
@@ -39,6 +40,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 	private boolean isAirplaneModeOn = false;
 	private boolean isOutOfService = false;
 	private boolean isRoaming = false;
+	private long dataUsageBytes = 0;
 
 	@Override
 	public void onReceive(Context context, Intent intent)
@@ -56,13 +58,31 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		isAirplaneModeOn = MobileDataUtils.getAirplaneModeOn(context);
 		isOutOfService = NetworkStateService.isMobileOutOfService();
 		isRoaming = getRoaming(context);
+		dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
 
 		if (Constants.ACTION_DATA_CONNECTION_CHANGED.equals(action) ||
 			Constants.ACTION_DATA_STATE_CHANGED.equals(action) ||
-			Constants.ACTION_SERVICE_STATE_CHANGED.equals(action) ||
-			Intent.ACTION_SCREEN_ON.equals(action))
+			Constants.ACTION_SERVICE_STATE_CHANGED.equals(action))
+		{
+			// Needed to get around a known bug in Android 5.x: https://code.google.com/p/android/issues/detail?id=78924
+			if ((dataState == TelephonyManager.DATA_CONNECTED) && (dataUsageBytes == 0) && !NetworkStateService.isWaitingForDataUsage())
+			{
+				NetworkStateService.setWaitingForDataUsage(true);
+				Intent serviceIntent = new Intent(context, NetworkStateService.class);
+				serviceIntent.setAction(Constants.ACTION_DATA_CONNECTED);
+				context.startService(serviceIntent);
+			}
+
+			partiallyUpdateWidgets(context);
+		}
+		else if (Constants.ACTION_DATA_USAGE_UPDATE.equals(action))
 		{
 			partiallyUpdateWidgets(context);
+		}
+		else if (Intent.ACTION_SCREEN_ON.equals(action))
+		{
+			if (dataState == TelephonyManager.DATA_CONNECTED)
+				partiallyUpdateWidgets(context);
 		}
 		else if (Constants.ACTION_UPDATE_WIDGET.equals(action))
 		{
@@ -157,7 +177,9 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
 			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - ".concat(context.getString(R.string.roaming)) : ""));
 			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsageString(context));
+
+			final boolean isConnecting = ((dataState == TelephonyManager.DATA_CONNECTING) || NetworkStateService.isWaitingForDataUsage());
+			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, isConnecting ? context.getString(R.string.connecting) : MobileDataUtils.getDataUsageString(context, dataUsageBytes));
 		}
 	}
 }

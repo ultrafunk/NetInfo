@@ -26,8 +26,6 @@ import android.os.Bundle;
 import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.WidgetProvider;
 
-import java.text.DecimalFormat;
-
 public class Utils
 {
 	public static boolean isWifiConnected(Context context)
@@ -45,7 +43,7 @@ public class Utils
 		return false;
 	}
 
-	public static EnabledWidgets GetEnabledWidgets(Context context, AppWidgetManager appWidgetManager)
+	public static EnabledWidgets getEnabledWidgets(Context context, AppWidgetManager appWidgetManager)
 	{
 		int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, WidgetProvider.class));
 		boolean mobileDataWidgets = false, wifiWidgets = false;
@@ -65,16 +63,5 @@ public class Utils
 		}
 
 		return new EnabledWidgets(mobileDataWidgets, wifiWidgets);
-	}
-
-	public static String readableSize(long size)
-	{
-		if(size <= 0)
-			return "0";
-
-		final String[] units = new String[] { "bytes", "KB", "MB", "GB", "TB" };
-		int digitGroups = (int) (Math.log10(size) / Math.log10(1024));
-
-		return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
 	}
 }

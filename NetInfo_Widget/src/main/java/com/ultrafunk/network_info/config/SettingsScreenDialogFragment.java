@@ -41,21 +41,21 @@ public class SettingsScreenDialogFragment extends DialogFragment
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState)
 	{
-		AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
 		Bundle bundle = getArguments();
 
-		dialog.setTitle(getString(R.string.settings_screen));
-		dialog.setPositiveButton(getString(android.R.string.cancel), new PositiveButtonClickListener());
+		alertDialog.setTitle(getString(R.string.settings_screen));
+		alertDialog.setPositiveButton(getString(android.R.string.cancel), new PositiveButtonClickListener());
 
 		ArrayList<String> arrayList = new ArrayList<>();
 		arrayList.add(getString(R.string.mobile_network_settings));
 		arrayList.add(getString(R.string.data_usage));
 
-		dialog.setSingleChoiceItems(arrayList.toArray(new CharSequence[arrayList.size()]),
-									bundle.getInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS),
-									selectItemListener);
+		alertDialog.setSingleChoiceItems(arrayList.toArray(new CharSequence[arrayList.size()]),
+			bundle.getInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS),
+			selectItemListener);
 
-		return dialog.create();
+		return alertDialog.create();
 	}
 
 	@Override

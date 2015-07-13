@@ -60,8 +60,7 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 		*/
 
-		// Set the result to CANCELED. This will cause the widget host to cancel
-		// out of the widget placement if they press the back button.
+		// Set the result to CANCELED. This will cause the widget host to cancel out of the widget placement if they press the back button.
 		setResult(RESULT_CANCELED);
 
 		setContentView(R.layout.activity_config);
@@ -80,13 +79,46 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 		widgetConfig = new WidgetConfig(this);
 		widgetConfig.read(appWidgetId);
 
+		// ToDo: Needs to change if/when the ConfigActivity is started from a widget or home screen
+		widgetConfig.setBothWidgets(true);
+
 		TextView configurationTextView = (TextView) findViewById(R.id.configurationTextView);
 		configurationTextView.setText((isLockscreenWidget(appAppWidgetManager, appWidgetId) ? getString(R.string.lockscreen_configuration) : getString(R.string.homescreen_configuration)));
 
-		RadioGroup showWidgetRadioGroup = (RadioGroup) findViewById(R.id.showWidgetRadioGroup);
+		initShowWidgetView();
+		initMobileSettingsScreenView();
+		initLockscreenGravityView();
+		initTransparencyView();
+		initOkAndCancelButtons();
+	}
 
-		// ToDo: Needs to change if/when the ConfigActivity is started from a widget or home screen
-		widgetConfig.setBothWidgets(true);
+	@Override
+	public void onDestroy()
+	{
+		super.onDestroy();
+		widgetConfig.write(appWidgetId);
+	}
+
+	@Override
+	public void onDialogSelectionChanged(int selected)
+	{
+		TextView mobileCurrentSettingsScreenTextView = (TextView) findViewById(R.id.mobileCurrentSettingsScreenTextView);
+
+		if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
+		{
+			widgetConfig.setMobileDataSettingsScreen(selected);
+			mobileCurrentSettingsScreenTextView.setText(getString(R.string.mobile_network_settings));
+		}
+		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE)
+		{
+			widgetConfig.setMobileDataSettingsScreen(selected);
+			mobileCurrentSettingsScreenTextView.setText(getString(R.string.data_usage));
+		}
+	}
+
+	private void initShowWidgetView()
+	{
+		RadioGroup showWidgetRadioGroup = (RadioGroup) findViewById(R.id.showWidgetRadioGroup);
 
 		if (widgetConfig.showBothWidgets())
 			showWidgetRadioGroup.check(R.id.showBothRadioButton);
@@ -122,24 +154,29 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 				}
 			}
 		});
+	}
 
+	private void initMobileSettingsScreenView()
+	{
 		LinearLayout mobileSettingsScreenLinearLayout = (LinearLayout) findViewById(R.id.mobileSettingsScreenLinearLayout);
 		onDialogSelectionChanged(widgetConfig.getMobileDataSettingsScreen());
+
 		mobileSettingsScreenLinearLayout.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
-			public void onClick(View view)
-			{
+			public void onClick(View view) {
 				DialogFragment dialogFragment = new SettingsScreenDialogFragment();
 
 				Bundle bundle = new Bundle();
 				bundle.putInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, widgetConfig.getMobileDataSettingsScreen());
 				dialogFragment.setArguments(bundle);
-
 				dialogFragment.show(getSupportFragmentManager(), "SettingsScreenDialogFragment");
 			}
 		});
+	}
 
+	private void initLockscreenGravityView()
+	{
 		if (!isLockscreenWidget(appAppWidgetManager, appWidgetId))
 		{
 			widgetConfig.setLockscreenWidget(false);
@@ -151,6 +188,7 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 			widgetConfig.setLockscreenWidget(true);
 			gravityCheckedTextView = (CheckedTextView) findViewById(R.id.gravityCheckedTextView);
 			gravityCheckedTextView.setChecked((widgetConfig.getLockscreenGravity() == Gravity.TOP) ? false : true);
+
 			gravityCheckedTextView.setOnClickListener(new View.OnClickListener()
 			{
 				@Override
@@ -169,12 +207,16 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 				}
 			});
 		}
+	}
 
+	private void initTransparencyView()
+	{
 		bgTransValTextView = (TextView) findViewById(R.id.bgTransValTextView);
 		bgTransValTextView.setText(String.format("%d%%", widgetConfig.getBackgroundTransparency()));
 
 		SeekBar bgTransSeekBar = (SeekBar) findViewById(R.id.bgTransSeekBar);
 		bgTransSeekBar.setProgress(widgetConfig.getBackgroundTransparency());
+
 		bgTransSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
 		{
 			@Override
@@ -190,8 +232,12 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 				bgTransValTextView.setText(String.format("%d%%", progress));
 			}
 		});
+	}
 
+	private void initOkAndCancelButtons()
+	{
 		Button okButton = (Button) findViewById(R.id.okButton);
+
 		okButton.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -201,7 +247,7 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 
 				widgetConfig.write(appWidgetId);
 
-				EnabledWidgets enabledWidgets = Utils.GetEnabledWidgets(context, appAppWidgetManager);
+				EnabledWidgets enabledWidgets = Utils.getEnabledWidgets(context, appAppWidgetManager);
 				WidgetProvider.enableDisableReceivers(context, enabledWidgets);
 				WidgetProvider.updateWidget(context, appAppWidgetManager, appWidgetId, widgetConfig);
 				WidgetProvider.startStopService(context, enabledWidgets);
@@ -215,6 +261,7 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 		});
 
 		Button cancelButton = (Button) findViewById(R.id.cancelButton);
+
 		cancelButton.setOnClickListener(new View.OnClickListener()
 		{
 			@Override
@@ -224,30 +271,6 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 				finish();
 			}
 		});
-	}
-
-	@Override
-	public void onDestroy()
-	{
-		super.onDestroy();
-		widgetConfig.write(appWidgetId);
-	}
-
-	@Override
-	public void onDialogSelectionChanged(int selected)
-	{
-		TextView mobileCurrentSettingsScreenTextView = (TextView) findViewById(R.id.mobileCurrentSettingsScreenTextView);
-
-		if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
-		{
-			widgetConfig.setMobileDataSettingsScreen(selected);
-			mobileCurrentSettingsScreenTextView.setText(getString(R.string.mobile_network_settings));
-		}
-		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE)
-		{
-			widgetConfig.setMobileDataSettingsScreen(selected);
-			mobileCurrentSettingsScreenTextView.setText(getString(R.string.data_usage));
-		}
 	}
 
 	private static boolean isLockscreenWidget(AppWidgetManager appWidgetManager, int appWidgetId)

@@ -36,6 +36,8 @@ public class Constants
 	public static final String ACTION_SERVICE_STATE_CHANGED		= "action.SERVICE_STATE_CHANGED";
 	public static final String ACTION_DATA_CONNECTION_CHANGED	= "action.DATA_CONNECTION_CHANGED";
 	public static final String ACTION_DATA_STATE_CHANGED		= "action.DATA_STATE_CHANGED";
+	public static final String ACTION_DATA_CONNECTED			= "action.DATA_CONNECTED";
+	public static final String ACTION_DATA_USAGE_UPDATE			= "action.DATA_USAGE_UPDATE";
 
 	public static final String ACTION_WIFI_CONNECTING	= "action.WIFI_CONNECTING";
 	public static final String ACTION_WIFI_CONNECTED 	= "action.WIFI_CONNECTED";
