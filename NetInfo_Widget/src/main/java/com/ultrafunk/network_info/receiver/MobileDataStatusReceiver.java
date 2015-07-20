@@ -35,11 +35,11 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 {
 	private TelephonyManager telephonyManager = null;
 	private int dataState = -1;
-	private String networkOperatorAndServiceProvider = null;
 	private boolean isMobileDataEnabled = false;
 	private boolean isAirplaneModeOn = false;
-	private boolean isOutOfService = false;
-	private boolean isRoaming = false;
+	private boolean isMobileOutOfService = false;
+	private boolean isDataRoaming = false;
+	private String networkOperatorAndServiceProvider = null;
 	private long dataUsageBytes = 0;
 
 	@Override
@@ -53,12 +53,12 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 		telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
 		dataState = telephonyManager.getDataState();
+		isMobileDataEnabled = MobileDataUtils.isMobileDataEnabled(context);
+		isAirplaneModeOn = MobileDataUtils.isAirplaneModeOn(context);
+		isMobileOutOfService = NetworkStateService.isMobileOutOfService();
+		isDataRoaming = isDataRoaming(context);
 		networkOperatorAndServiceProvider = getNetworkOperatorAndServiceProvider(context);
-		isMobileDataEnabled = MobileDataUtils.getMobileDataEnabled(context);
-		isAirplaneModeOn = MobileDataUtils.getAirplaneModeOn(context);
-		isOutOfService = NetworkStateService.isMobileOutOfService();
-		isRoaming = getRoaming(context);
-		dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
+		dataUsageBytes = NetworkStateService.setGetDataUsageBytes(TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes());
 
 		if (Constants.ACTION_DATA_CONNECTION_CHANGED.equals(action) ||
 			Constants.ACTION_DATA_STATE_CHANGED.equals(action) ||
@@ -75,14 +75,9 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 
 			partiallyUpdateWidgets(context);
 		}
-		else if (Constants.ACTION_DATA_USAGE_UPDATE.equals(action))
+		else if (Constants.ACTION_DATA_USAGE_UPDATE.equals(action) || Intent.ACTION_SCREEN_ON.equals(action))
 		{
 			partiallyUpdateWidgets(context);
-		}
-		else if (Intent.ACTION_SCREEN_ON.equals(action))
-		{
-			if (dataState == TelephonyManager.DATA_CONNECTED)
-				partiallyUpdateWidgets(context);
 		}
 		else if (Constants.ACTION_UPDATE_WIDGET.equals(action))
 		{
@@ -90,32 +85,35 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		}
 	}
 
-	private boolean getRoaming(Context context)
+	private boolean isDataRoaming(Context context)
 	{
 		if ((dataState == TelephonyManager.DATA_CONNECTED) && telephonyManager.isNetworkRoaming())
 		{
 			ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
 			NetworkInfo networkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
-			if (networkInfo != null)
-				return networkInfo.isRoaming();
+			return (networkInfo != null) ? networkInfo.isRoaming() : false;
 		}
-
-		return false;
+		else
+		{
+			return telephonyManager.isNetworkRoaming() && MobileDataUtils.isDataRoaming(context);
+		}
 	}
 
 	private String getNetworkOperatorAndServiceProvider(Context context)
 	{
 		String networkOperatorName = telephonyManager.getNetworkOperatorName();
 
-		if ((networkOperatorName == null) || (networkOperatorName.isEmpty()))
-			networkOperatorName = context.getString(R.string.unknown_network);
+		if (networkOperatorName.isEmpty())
+			networkOperatorName = context.getString(R.string.not_available);
 
-		if (telephonyManager.isNetworkRoaming())
+		if (isDataRoaming)
 		{
 			String simOperatorName = telephonyManager.getSimOperatorName();
+			String networkOperator = telephonyManager.getNetworkOperator();
+			String simOperator = telephonyManager.getSimOperator();
 
-			if ((simOperatorName != null) && !simOperatorName.isEmpty() && !simOperatorName.equalsIgnoreCase(networkOperatorName))
+			if (!simOperatorName.isEmpty() && !networkOperator.equalsIgnoreCase(simOperator))
 				return networkOperatorName + " - " + simOperatorName;
 		}
 
@@ -134,7 +132,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 	@Override
 	protected void updateView(Context context, RemoteViews remoteViews, Bundle widgetOptions)
 	{
-		if (isMobileDataEnabled && isOutOfService)
+		if (isMobileDataEnabled && isMobileOutOfService)
 		{
 			setStateColor(context, remoteViews, STATE_ON);
 			remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.mobile_data));
@@ -160,13 +158,19 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			else
 			{
 				setStateColor(context, remoteViews, STATE_OFF);
-				remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.mobile_data));
+				remoteViews.setTextViewText(R.id.mobileNameTextView, isAirplaneModeOn ? context.getString(R.string.mobile_data) : networkOperatorAndServiceProvider);
 				remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_off);
 
 				if (isAirplaneModeOn)
+				{
 					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.flight_mode));
+				}
 				else
-					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.tap_to_change));
+				{
+					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType()) + (isDataRoaming ? " - " + context.getString(R.string.roaming) : ""));
+					remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.VISIBLE);
+					remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsageString(context, NetworkStateService.getDataUsageBytes()));
+				}
 			}
 		}
 		else
@@ -175,10 +179,10 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
 			remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_on);
 			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager) + (isRoaming ? " - ".concat(context.getString(R.string.roaming)) : ""));
+			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType()) + (isDataRoaming ? " - " + context.getString(R.string.roaming) : ""));
 			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.VISIBLE);
 
-			final boolean isConnecting = ((dataState == TelephonyManager.DATA_CONNECTING) || NetworkStateService.isWaitingForDataUsage());
+			boolean isConnecting = ((dataState == TelephonyManager.DATA_CONNECTING) || NetworkStateService.isWaitingForDataUsage());
 			remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, isConnecting ? context.getString(R.string.connecting) : MobileDataUtils.getDataUsageString(context, dataUsageBytes));
 		}
 	}

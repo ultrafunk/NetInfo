@@ -21,7 +21,8 @@
             android:id="@+id/wifiNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="@color/medium_gray"
             android:text="@string/wifi"
             android:includeFontPadding="false"
             android:layout_alignParentLeft="true"
@@ -43,6 +44,7 @@
 
     <TextView
         android:id="@+id/wifiHeaderSpacerTextView"
+        android:background="@color/medium_gray"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@+id/wifiOnOffRelativeLayout"

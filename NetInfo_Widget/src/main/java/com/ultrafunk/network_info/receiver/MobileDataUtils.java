@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
 
 public class MobileDataUtils
 {
-	public static boolean getMobileDataEnabled(Context context)
+	public static boolean isMobileDataEnabled(Context context)
 	{
 		try
 		{
@@ -62,7 +62,7 @@ public class MobileDataUtils
 		}
 	}
 
-	public static boolean getAirplaneModeOn(Context context)
+	public static boolean isAirplaneModeOn(Context context)
 	{
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
 			return Settings.System.getInt(context.getContentResolver(),	Settings.System.AIRPLANE_MODE_ON, 0) == 1;
@@ -70,7 +70,7 @@ public class MobileDataUtils
 			return Settings.Global.getInt(context.getContentResolver(),	Settings.Global.AIRPLANE_MODE_ON, 0) == 1;
 	}
 
-	public static boolean getDataRoaming(Context context)
+	public static boolean isDataRoaming(Context context)
 	{
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
 			return Settings.Secure.getInt(context.getContentResolver(), Settings.Secure.DATA_ROAMING, 0) == 1;
@@ -78,9 +78,9 @@ public class MobileDataUtils
 			return Settings.Global.getInt(context.getContentResolver(), Settings.Global.DATA_ROAMING, 0) == 1;
 	}
 
-	public static String getNetworkTypeString(TelephonyManager telephonyManager)
+	public static String getNetworkTypeString(int networkType)
 	{
-		switch (telephonyManager.getNetworkType())
+		switch (networkType)
 		{
 			case TelephonyManager.NETWORK_TYPE_GPRS:	return "GPRS 2G";
 			case TelephonyManager.NETWORK_TYPE_EDGE:	return "EDGE 2G";
@@ -115,7 +115,7 @@ public class MobileDataUtils
 	public static String getDataUsageString(Context context, long dataUsageBytes)
 	{
 		if (dataUsageBytes <= 0)
-			return context.getString(R.string.no_data_usage);
+			return context.getString(R.string.data_usage_na);
 
 		long elapsedTime = SystemClock.elapsedRealtime();
 		int hours = (int) (elapsedTime / (1000 * 60 * 60));

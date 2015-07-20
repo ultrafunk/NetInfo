@@ -45,9 +45,9 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 
 	private void turnOnOff(Context context)
 	{
-		boolean isMobileDataEnabled = MobileDataUtils.getMobileDataEnabled(context);
-		boolean isAirplaneModeOn = MobileDataUtils.getAirplaneModeOn(context);
-		boolean isOutOfService = NetworkStateService.isMobileOutOfService();
+		boolean isMobileDataEnabled = MobileDataUtils.isMobileDataEnabled(context);
+		boolean isAirplaneModeOn = MobileDataUtils.isAirplaneModeOn(context);
+		boolean isOutMobileOfService = NetworkStateService.isMobileOutOfService();
 
 		if (isAirplaneModeOn)
 		{
@@ -59,7 +59,7 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 
 			if (isMobileDataEnabled)
 			{
-				if (!isWifiConnected && !isOutOfService)
+				if (!isWifiConnected && !isOutMobileOfService)
 				{
 					turningOn = false;
 					partiallyUpdateWidgets(context);
@@ -69,7 +69,7 @@ public class MobileDataOnOffReceiver extends WidgetBroadcastReceiver
 			}
 			else
 			{
-				if (!isWifiConnected && !isOutOfService)
+				if (!isWifiConnected && !isOutMobileOfService)
 				{
 					turningOn = true;
 					partiallyUpdateWidgets(context);

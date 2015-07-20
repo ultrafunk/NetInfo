@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="medium_gray">#9E9E9E</color>
+    <color name="medium_gray">#7f7f7f</color>
     <color name="light_gray">#dddddd</color>
     <color name="netinfo_blue">#0f4caf</color>
 </resources>

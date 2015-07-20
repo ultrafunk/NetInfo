@@ -12,7 +12,6 @@
     <string name="not_connected">no conectado</string>
     <string name="roaming">itinerancia</string>
     <string name="tap_to_change">toca para cambiar</string>
-    <string name="unknown_network">red desconocida</string>
     <string name="wifi">Wi-Fi</string>
     <string name="wifi_2_1">Wi-Fi (2 x 1)</string>
     <string name="wifi_security_none">sin seguridad</string>
@@ -31,5 +30,6 @@
     <string name="hour">hour</string>
     <string name="day">day</string>
     <string name="week">week</string>
-    <string name="no_data_usage">no data usage</string>
+    <string name="data_usage_na">data usage n/a</string>
+    <string name="not_available">N/A</string>
 </resources>

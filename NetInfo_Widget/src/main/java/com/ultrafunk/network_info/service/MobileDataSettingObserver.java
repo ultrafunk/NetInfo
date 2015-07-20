@@ -55,6 +55,6 @@ public class MobileDataSettingObserver extends ContentObserver
 	private boolean isMobileDataDisconnectedDueToRoaming()
 	{
 		TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		return (MobileDataUtils.getDataRoaming(context) == false) && telephonyManager.isNetworkRoaming();
+		return (MobileDataUtils.isDataRoaming(context) == false) && telephonyManager.isNetworkRoaming();
 	}
 }

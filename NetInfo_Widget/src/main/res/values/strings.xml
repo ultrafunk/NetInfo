@@ -12,7 +12,7 @@
     <string name="turning_on">turning on…</string>
     <string name="turning_off">turning off…</string>
 
-    <string name="unknown_network">unknown network</string>
+    <string name="not_available">N/A</string>
     <string name="no_service">no service</string>
     <string name="not_connected">not connected</string>
     <string name="flight_mode">flight mode</string>
@@ -21,7 +21,7 @@
     <string name="hour">hour</string>
     <string name="day">day</string>
     <string name="week">week</string>
-    <string name="no_data_usage">no data usage</string>
+    <string name="data_usage_na">data usage n/a</string>
 
     <string name="security">Security</string>
     <string name="no_network">no network</string>

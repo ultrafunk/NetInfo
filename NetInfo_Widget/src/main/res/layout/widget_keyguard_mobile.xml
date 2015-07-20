@@ -27,6 +27,7 @@
                 android:paddingTop="10dp"
                 android:paddingBottom="10dp"
                 android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@color/medium_gray"
                 android:text="@string/mobile_data"
                 android:includeFontPadding="false"
                 android:layout_alignParentTop="true"
@@ -48,6 +49,7 @@
 
         <TextView
             android:id="@+id/mobileHeaderSpacerTextView"
+            android:background="@color/medium_gray"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_below="@+id/mobileOnOffRelativeLayout"

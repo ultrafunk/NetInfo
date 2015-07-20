@@ -55,6 +55,7 @@ public class NetworkStateService extends Service
 
 	private static boolean isMobileOutOfService = false;
 	private static String wifiSecurityString = null;
+	private static long dataUsageBytes = 0;
 	private static boolean isWaitingForDataUsage = false;
 
 	@Override
@@ -161,6 +162,15 @@ public class NetworkStateService extends Service
 
 	public static String getWifiSecurityString() 								{ return wifiSecurityString; }
 	public static void setWifiSecurityString(String wifiSecurityString) 		{ NetworkStateService.wifiSecurityString = wifiSecurityString; }
+
+	public static long getDataUsageBytes()										{ return dataUsageBytes; }
+	public static long setGetDataUsageBytes(long dataUsageBytes)
+	{
+		if (dataUsageBytes > 0 )
+			NetworkStateService.dataUsageBytes = dataUsageBytes;
+
+		return dataUsageBytes;
+	}
 
 	public static boolean isWaitingForDataUsage()								{ return isWaitingForDataUsage; }
 	public static void setWaitingForDataUsage(boolean isWaitingForDataUsage)	{ NetworkStateService.isWaitingForDataUsage = isWaitingForDataUsage; }
