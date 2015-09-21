@@ -23,6 +23,7 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.RemoteViews;
 
@@ -125,7 +126,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 
 	private void setStateColor(Context context, RemoteViews remoteViews, int state)
 	{
-		int color = (state == STATE_ON) ? context.getResources().getColor(android.R.color.white) : context.getResources().getColor(R.color.medium_gray);
+		int color = (state == STATE_ON) ? ContextCompat.getColor(context, android.R.color.white) : ContextCompat.getColor(context, R.color.medium_gray);
 		remoteViews.setTextColor(R.id.wifiNameTextView, color);
 		remoteViews.setInt(R.id.wifiHeaderSpacerTextView, "setBackgroundColor", color);
 		remoteViews.setTextColor(R.id.wifiInfoTopTextView, color);
@@ -153,9 +154,13 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 			{
 				setStateColor(context, remoteViews, STATE_ON);
 				remoteViews.setTextViewText(R.id.wifiNameTextView, wifiInfo.getSSID().replace("\"", ""));
-				remoteViews.setTextViewText(R.id.wifiInfoTopTextView, detailsString);
-				remoteViews.setTextViewText(R.id.wifiInfoBottomTextView, WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
-				remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, detailsString.isEmpty() ? View.GONE : View.VISIBLE);
+
+				if(!detailsString.isEmpty())
+				{
+					remoteViews.setTextViewText(R.id.wifiInfoTopTextView, detailsString);
+					remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, View.VISIBLE);
+					remoteViews.setTextViewText(R.id.wifiInfoBottomTextView, WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
+				}
 			}
 			else
 			{
