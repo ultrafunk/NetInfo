@@ -19,6 +19,7 @@ package com.ultrafunk.network_info;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.appwidget.AppWidgetProviderInfo;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -26,7 +27,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.os.Build;
+import android.os.Bundle;
 import android.provider.Settings;
+import android.util.TypedValue;
 import android.widget.RemoteViews;
 
 import com.ultrafunk.network_info.config.WidgetConfig;
@@ -68,6 +71,40 @@ public class WidgetProvider extends AppWidgetProvider
 		}
 
 		setReceiversAndServiceState(context);
+	}
+
+	@Override
+	public void onAppWidgetOptionsChanged(Context context, AppWidgetManager appWidgetManager, int appWidgetId, Bundle newOptions)
+	{
+		super.onAppWidgetOptionsChanged(context, appWidgetManager, appWidgetId, newOptions);
+
+		if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1) == AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN)
+		{
+			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), newOptions.getInt(Constants.PREF_LAYOUT_ID, 0));
+			boolean mobileDataWidget = newOptions.getBoolean(Constants.PREF_MOBILE_DATA_WIDGET, false);
+			boolean wifiWidget = newOptions.getBoolean(Constants.PREF_WIFI_WIDGET, false);
+			int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
+
+			setWidgetTextSize(remoteViews, mobileDataWidget, wifiWidget, (minWidth > 175) ? 14 : 12);
+			appWidgetManager.partiallyUpdateAppWidget(appWidgetId, remoteViews);
+		}
+	}
+
+	private void setWidgetTextSize(RemoteViews remoteViews, boolean mobileDataWidget, boolean wifiWidget, int textSize)
+	{
+		if (mobileDataWidget)
+		{
+			remoteViews.setTextViewTextSize(R.id.mobileNameTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+			remoteViews.setTextViewTextSize(R.id.mobileInfoTopTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+			remoteViews.setTextViewTextSize(R.id.mobileInfoBottomTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+		}
+
+		if (wifiWidget)
+		{
+			remoteViews.setTextViewTextSize(R.id.wifiNameTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+			remoteViews.setTextViewTextSize(R.id.wifiInfoTopTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+			remoteViews.setTextViewTextSize(R.id.wifiInfoBottomTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+		}
 	}
 
 	public static void updateWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, WidgetConfig widgetConfig)
