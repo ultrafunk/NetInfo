@@ -10,10 +10,10 @@
         android:id="@+id/mobileOnOffRelativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="4dp"
+        android:paddingTop="5dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:paddingBottom="2dp"
+        android:paddingBottom="3dp"
         android:clickable="true"
         android:background="?android:selectableItemBackground" >
 
@@ -34,8 +34,8 @@
 
         <ImageView
             android:id="@+id/mobileStateImageView"
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:src="@drawable/ic_signal_cellular_off"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true" />

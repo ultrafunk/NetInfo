@@ -46,7 +46,7 @@ public class WifiUtils
 		if (connectedScanResult != null)
 			return getSecurityString(context, connectedScanResult);
 		else
-			return "unknown";
+			return context.getString(R.string.not_available);
 	}
 
 	// START: android-4.4.4_r2.0.1

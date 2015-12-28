@@ -37,7 +37,6 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 	private int wifiState = -1;
 	private WifiInfo wifiInfo = null;
 	private String detailsString = "";
-	private NetworkInfo.DetailedState detailedState = null;
 
 	@Override
 	public void onReceive(Context context, Intent intent)
@@ -52,16 +51,13 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 		wifiState = wifiManager.getWifiState();
 		wifiInfo = wifiManager.getConnectionInfo();
 
-		if ((wifiState == WifiManager.WIFI_STATE_ENABLED) && (wifiInfo.getIpAddress() == 0))
-			detailedState = WifiInfo.getDetailedStateOf(wifiInfo.getSupplicantState());
-
 		if (WifiManager.NETWORK_STATE_CHANGED_ACTION.equals(action))
 		{
 			if (isConnectionReady(intent))
 			{
 				String securityString = WifiUtils.getSecurityString(context, wifiManager, wifiInfo.getBSSID());
 				NetworkStateService.setWifiSecurityString(securityString);
-				detailsString = context.getString(R.string.security) + ": " + securityString;
+				detailsString = context.getString(R.string.security) + securityString;
 
 				Intent serviceIntent = new Intent(context, NetworkStateService.class);
 				serviceIntent.setAction(Constants.ACTION_WIFI_CONNECTED);
@@ -121,7 +117,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 		if (wifiInfo.getLinkSpeed() != -1)
 			detailsString = String.format("%s - %d %s", securityString, wifiInfo.getLinkSpeed(), WifiInfo.LINK_SPEED_UNITS);
 		else
-			detailsString = context.getString(R.string.security) + ": " + securityString;
+			detailsString = context.getString(R.string.security) + securityString;
 	}
 
 	private void setStateColor(Context context, RemoteViews remoteViews, int state)
@@ -166,16 +162,27 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 			{
 				remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, View.GONE);
 
-				if (detailedState == NetworkInfo.DetailedState.OBTAINING_IPADDR)
+				switch (wifiInfo.getSupplicantState())
 				{
-					remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.connecting));
-				}
-				else
-				{
-					setStateColor(context, remoteViews, STATE_ON);
-					remoteViews.setTextViewText(R.id.wifiNameTextView, context.getString(R.string.wifi));
-					remoteViews.setImageViewResource(R.id.wifiStateImageView, R.drawable.ic_signal_wifi_enabled);
-					remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.no_network));
+					case DISCONNECTED:
+					case DORMANT:
+					case INTERFACE_DISABLED:
+						remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.disconnecting));
+						break;
+
+					case SCANNING:
+					case INVALID:
+					case UNINITIALIZED:
+					case INACTIVE:
+						setStateColor(context, remoteViews, STATE_ON);
+						remoteViews.setTextViewText(R.id.wifiNameTextView, context.getString(R.string.wifi));
+						remoteViews.setImageViewResource(R.id.wifiStateImageView, R.drawable.ic_signal_wifi_enabled);
+						remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.no_network));
+						break;
+
+					default:
+						remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.connecting));
+						break;
 				}
 			}
 		}

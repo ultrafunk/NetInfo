@@ -23,9 +23,10 @@
     <string name="week">week</string>
     <string name="data_usage_na">data usage n/a</string>
 
-    <string name="security">Security</string>
+    <string name="security">"Security: "</string>
     <string name="no_network">no network</string>
     <string name="connecting">connecting…</string>
+    <string name="disconnecting">disconnecting…</string>
 
     <!-- Widget configuration -->
     <string name="lockscreen_configuration">Lock Screen Configuration</string>

@@ -81,27 +81,25 @@ public class WidgetProvider extends AppWidgetProvider
 		if (newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_HOST_CATEGORY, -1) == AppWidgetProviderInfo.WIDGET_CATEGORY_HOME_SCREEN)
 		{
 			RemoteViews remoteViews = new RemoteViews(context.getPackageName(), newOptions.getInt(Constants.PREF_LAYOUT_ID, 0));
-			boolean mobileDataWidget = newOptions.getBoolean(Constants.PREF_MOBILE_DATA_WIDGET, false);
-			boolean wifiWidget = newOptions.getBoolean(Constants.PREF_WIFI_WIDGET, false);
 			int minWidth = newOptions.getInt(AppWidgetManager.OPTION_APPWIDGET_MIN_WIDTH);
 
-			setWidgetTextSize(remoteViews, mobileDataWidget, wifiWidget, (minWidth > 175) ? 14 : 12);
+			setWidgetTextSize(remoteViews, newOptions, (minWidth > 175) ? 14 : 12);
 			appWidgetManager.partiallyUpdateAppWidget(appWidgetId, remoteViews);
 		}
 	}
 
-	private void setWidgetTextSize(RemoteViews remoteViews, boolean mobileDataWidget, boolean wifiWidget, int textSize)
+	private void setWidgetTextSize(RemoteViews remoteViews, Bundle newOptions, int textSize)
 	{
-		if (mobileDataWidget)
+		if (newOptions.getBoolean(Constants.PREF_MOBILE_DATA_WIDGET, false))
 		{
-			remoteViews.setTextViewTextSize(R.id.mobileNameTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+			remoteViews.setTextViewTextSize(R.id.mobileNameTextView, TypedValue.COMPLEX_UNIT_SP, textSize + 1);
 			remoteViews.setTextViewTextSize(R.id.mobileInfoTopTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
 			remoteViews.setTextViewTextSize(R.id.mobileInfoBottomTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
 		}
 
-		if (wifiWidget)
+		if (newOptions.getBoolean(Constants.PREF_WIFI_WIDGET, false))
 		{
-			remoteViews.setTextViewTextSize(R.id.wifiNameTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
+			remoteViews.setTextViewTextSize(R.id.wifiNameTextView, TypedValue.COMPLEX_UNIT_SP, textSize + 1);
 			remoteViews.setTextViewTextSize(R.id.wifiInfoTopTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
 			remoteViews.setTextViewTextSize(R.id.wifiInfoBottomTextView, TypedValue.COMPLEX_UNIT_SP, textSize);
 		}
