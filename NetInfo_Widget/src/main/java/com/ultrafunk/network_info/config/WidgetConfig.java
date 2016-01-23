@@ -29,6 +29,7 @@ public class WidgetConfig
 {
 	public static final int MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS = 0;
 	public static final int MOBILE_DATA_SETTINGS_DATA_USAGE = 1;
+	public static final int MOBILE_DATA_SETTINGS_TETHERING_SETTINGS = 2;
 
 	private final Context context;
 	private SharedPreferences sharedPreferences;

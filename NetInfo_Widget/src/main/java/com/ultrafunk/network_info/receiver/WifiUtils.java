@@ -27,7 +27,7 @@ public class WifiUtils
 {
 	public static String getIpAddressString(int ipAddress)
 	{
-		return String.format("IP: %d.%d.%d.%d",	(ipAddress & 0xff),	(ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
+		return String.format("%d.%d.%d.%d",	(ipAddress & 0xff),	(ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 	}
 
 	public static String getSecurityString(Context context, WifiManager wifiManager, String connectedBSSID)
@@ -48,6 +48,34 @@ public class WifiUtils
 		else
 			return context.getString(R.string.not_available);
 	}
+
+	// START: android-5.1.1_r33
+	// https://android.googlesource.com/platform/packages/apps/Settings/+/android-5.1.1_r33/src/com/android/settings/wifi/AccessPoint.java
+
+	// Lower bound on the 2.4 GHz (802.11b/g/n) WLAN channels
+	public static final int LOWER_FREQ_24GHZ = 2400;
+	// Upper bound on the 2.4 GHz (802.11b/g/n) WLAN channels
+	public static final int HIGHER_FREQ_24GHZ = 2500;
+	// Lower bound on the 5.0 GHz (802.11a/h/j/n/ac) WLAN channels
+	public static final int LOWER_FREQ_5GHZ = 4900;
+	// Upper bound on the 5.0 GHz (802.11a/h/j/n/ac) WLAN channels
+	public static final int HIGHER_FREQ_5GHZ = 5900;
+
+	public static String getWifiFrequencyString(int frequency, Context context)
+	{
+		if (frequency >= LOWER_FREQ_24GHZ && frequency < HIGHER_FREQ_24GHZ)
+		{
+			return context.getString(R.string.wifi_band_24ghz);
+		}
+		else if (frequency >= LOWER_FREQ_5GHZ && frequency < HIGHER_FREQ_5GHZ)
+		{
+			return context.getString(R.string.wifi_band_5ghz);
+		}
+
+		return context.getString(R.string.not_available);
+	}
+
+	// END: android-5.1.1_r33
 
 	// START: android-4.4.4_r2.0.1
 	// https://android.googlesource.com/platform/packages/apps/Settings/+/android-4.4.4_r2.0.1/src/com/android/settings/wifi/AccessPoint.java

@@ -22,6 +22,7 @@ import android.content.Intent;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
@@ -155,7 +156,15 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 				{
 					remoteViews.setTextViewText(R.id.wifiInfoTopTextView, detailsString);
 					remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, View.VISIBLE);
-					remoteViews.setTextViewText(R.id.wifiInfoBottomTextView, WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
+
+					String bottomText;
+
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+						bottomText = String.format("%s - %s", WifiUtils.getWifiFrequencyString(wifiInfo.getFrequency(), context), WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
+					else
+						bottomText = String.format("IP: %s" + WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
+
+					remoteViews.setTextViewText(R.id.wifiInfoBottomTextView, bottomText);
 				}
 			}
 			else

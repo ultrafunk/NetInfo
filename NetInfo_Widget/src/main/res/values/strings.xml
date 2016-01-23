@@ -36,16 +36,30 @@
     <string name="wifi_2_1">Wi-Fi (2 x 1)</string>
     <string name="mobile_and_wifi_2_2">Mobile data &amp; Wi-Fi (2 x 2)</string>
 
-    <string name="mobile_data_settings_screen">Mobile data settings screen</string>
-    <string name="settings_screen">Settings screen</string>
+    <string name="mobile_data_settings_shortcut">Mobile data settings shortcut</string>
     <string name="mobile_network_settings">Mobile network settings</string>
     <string name="data_usage">Data usage</string>
+    <string name="tethering_settings">Tethering settings</string>
 
     <string name="center_vertically">Center vertically</string>
     <string name="bg_transparency">Background transparency</string>
     <string name="zero" translatable="false">0</string>
     <string name="fifty" translatable="false">50</string>
     <string name="one_hundred" translatable="false">100</string>
+
+    <!--
+    START: android-5.1.1_r33
+    https://android.googlesource.com/platform/packages/apps/Settings/+/android-5.1.1_r33/res/values/strings.xml
+    -->
+
+    <!-- Wifi 2.4GHz is used as an universal itendifier for 2.4GHz band -->
+    <string name="wifi_band_24ghz">2.4GHz</string>
+    <!-- Wifi Internal 5GHz as an universal itendifier for 5GHz band -->
+    <string name="wifi_band_5ghz">5GHz</string>
+
+    <!--
+    END: android-5.1.1_r33
+    -->
 
     <!--
     START: android-4.4.4_r2.0.1

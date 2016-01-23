@@ -44,12 +44,13 @@ public class SettingsScreenDialogFragment extends DialogFragment
 		AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity(), R.style.AppCompatAlertDialogStyle);
 		Bundle bundle = getArguments();
 
-		alertDialog.setTitle(getString(R.string.settings_screen));
+		alertDialog.setTitle(getString(R.string.mobile_data_settings_shortcut));
 		alertDialog.setPositiveButton(getString(android.R.string.cancel), new PositiveButtonClickListener());
 
 		ArrayList<String> arrayList = new ArrayList<>();
 		arrayList.add(getString(R.string.mobile_network_settings));
 		arrayList.add(getString(R.string.data_usage));
+		arrayList.add(getString(R.string.tethering_settings));
 
 		alertDialog.setSingleChoiceItems(arrayList.toArray(new CharSequence[arrayList.size()]),
 			bundle.getInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS),

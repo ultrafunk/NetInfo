@@ -114,6 +114,11 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 			widgetConfig.setMobileDataSettingsScreen(selected);
 			mobileCurrentSettingsScreenTextView.setText(getString(R.string.data_usage));
 		}
+		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_TETHERING_SETTINGS)
+		{
+			widgetConfig.setMobileDataSettingsScreen(selected);
+			mobileCurrentSettingsScreenTextView.setText(getString(R.string.tethering_settings));
+		}
 	}
 
 	private void initShowWidgetView()
