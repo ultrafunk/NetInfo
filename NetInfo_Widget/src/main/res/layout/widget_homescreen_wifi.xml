@@ -79,6 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/wifiInfoTopTextView"
             android:textAppearance="?android:attr/textAppearanceSmall"
+            android:fontFamily="sans-serif-condensed"
             android:singleLine="true"
             android:ellipsize="end"
             android:gravity="center_horizontal" />

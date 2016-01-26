@@ -50,7 +50,7 @@ public class SettingsScreenDialogFragment extends DialogFragment
 		ArrayList<String> arrayList = new ArrayList<>();
 		arrayList.add(getString(R.string.mobile_network_settings));
 		arrayList.add(getString(R.string.data_usage));
-		arrayList.add(getString(R.string.tethering_settings));
+		arrayList.add(getString(R.string.tethering_and_portable_hotspot));
 
 		alertDialog.setSingleChoiceItems(arrayList.toArray(new CharSequence[arrayList.size()]),
 			bundle.getInt(Constants.PREF_MOBILE_DATA_SETTINGS_SCREEN, WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS),

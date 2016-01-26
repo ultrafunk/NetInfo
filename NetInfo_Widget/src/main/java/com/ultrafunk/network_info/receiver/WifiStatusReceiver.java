@@ -157,12 +157,12 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 					remoteViews.setTextViewText(R.id.wifiInfoTopTextView, detailsString);
 					remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, View.VISIBLE);
 
-					String bottomText;
+					String bottomText = "";
 
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-						bottomText = String.format("%s - %s", WifiUtils.getWifiFrequencyString(wifiInfo.getFrequency(), context), WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
+						bottomText = String.format("%s - %s", WifiUtils.getIpAddressString(wifiInfo.getIpAddress()), WifiUtils.getWifiFrequencyString(context, wifiInfo.getFrequency()));
 					else
-						bottomText = String.format("IP: %s" + WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
+						bottomText = String.format("IP: %s", WifiUtils.getIpAddressString(wifiInfo.getIpAddress()));
 
 					remoteViews.setTextViewText(R.id.wifiInfoBottomTextView, bottomText);
 				}

@@ -103,22 +103,14 @@ public class ConfigActivity extends AppCompatActivity implements SettingsScreenD
 	public void onDialogSelectionChanged(int selected)
 	{
 		TextView mobileCurrentSettingsScreenTextView = (TextView) findViewById(R.id.mobileCurrentSettingsScreenTextView);
+		widgetConfig.setMobileDataSettingsScreen(selected);
 
 		if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
-		{
-			widgetConfig.setMobileDataSettingsScreen(selected);
 			mobileCurrentSettingsScreenTextView.setText(getString(R.string.mobile_network_settings));
-		}
 		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE)
-		{
-			widgetConfig.setMobileDataSettingsScreen(selected);
 			mobileCurrentSettingsScreenTextView.setText(getString(R.string.data_usage));
-		}
 		else if (selected == WidgetConfig.MOBILE_DATA_SETTINGS_TETHERING_SETTINGS)
-		{
-			widgetConfig.setMobileDataSettingsScreen(selected);
-			mobileCurrentSettingsScreenTextView.setText(getString(R.string.tethering_settings));
-		}
+			mobileCurrentSettingsScreenTextView.setText(getString(R.string.tethering_and_portable_hotspot));
 	}
 
 	private void initShowWidgetView()

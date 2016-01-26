@@ -43,9 +43,9 @@ import com.ultrafunk.network_info.util.Utils;
 
 public class WidgetProvider extends AppWidgetProvider
 {
-	private static final String PACKAGE_SETTINGS 		 = "com.android.settings";
-	private static final String CLASS_DATA_USAGE_SUMMARY = "com.android.settings.Settings$DataUsageSummaryActivity";
-	private static final String CLASS_TETHER_SETTINGS	 = "com.android.settings.TetherSettings";
+	private static final String PACKAGENAME_SETTINGS 		 = "com.android.settings";
+	private static final String CLASSNAME_DATA_USAGE_SUMMARY = PACKAGENAME_SETTINGS + ".Settings$DataUsageSummaryActivity";
+	private static final String CLASSNAME_TETHER_SETTINGS	 = PACKAGENAME_SETTINGS + ".TetherSettings";
 
 	@Override
 	public void onDisabled(Context context)
@@ -123,14 +123,14 @@ public class WidgetProvider extends AppWidgetProvider
 			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF));
 			else
-				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getSettingsPagePendingIntent(PACKAGE_SETTINGS, CLASS_DATA_USAGE_SUMMARY, context, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF)));
+				remoteViews.setOnClickPendingIntent(R.id.mobileOnOffRelativeLayout, getSettingsPagePendingIntent(context, PACKAGENAME_SETTINGS, CLASSNAME_DATA_USAGE_SUMMARY, getBroadcastPendingIntent(context, MobileDataOnOffReceiver.class, Constants.ONCLICK_MOBILE_DATA_ONOFF)));
 
 			if (widgetConfig.getMobileDataSettingsScreen() == WidgetConfig.MOBILE_DATA_SETTINGS_MOBILE_NETWORK_SETTINGS)
 				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS));
 			else if (widgetConfig.getMobileDataSettingsScreen() == WidgetConfig.MOBILE_DATA_SETTINGS_DATA_USAGE)
-				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPagePendingIntent(PACKAGE_SETTINGS, CLASS_DATA_USAGE_SUMMARY, context, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS)));
+				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPagePendingIntent(context, PACKAGENAME_SETTINGS, CLASSNAME_DATA_USAGE_SUMMARY, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS)));
 			else if (widgetConfig.getMobileDataSettingsScreen() == WidgetConfig.MOBILE_DATA_SETTINGS_TETHERING_SETTINGS)
-				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPagePendingIntent(PACKAGE_SETTINGS, CLASS_TETHER_SETTINGS, context, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS)));
+				remoteViews.setOnClickPendingIntent(R.id.mobileChangeRelativeLayout, getSettingsPagePendingIntent(context, PACKAGENAME_SETTINGS, CLASSNAME_TETHER_SETTINGS, getSettingsPendingIntent(context, Settings.ACTION_DATA_ROAMING_SETTINGS)));
 
 			broadcastUpdateWidget(context, MobileDataStatusReceiver.class, appWidgetId);
 		}
@@ -192,7 +192,7 @@ public class WidgetProvider extends AppWidgetProvider
 		return PendingIntent.getActivity(context, 0, new Intent(action), PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 
-	private static PendingIntent getSettingsPagePendingIntent(String packageName, String className, Context context, PendingIntent defaultPendingIntent)
+	private static PendingIntent getSettingsPagePendingIntent(Context context, String packageName, String className, PendingIntent defaultPendingIntent)
 	{
 		Intent intent = new Intent();
 		intent.setClassName(packageName, className);

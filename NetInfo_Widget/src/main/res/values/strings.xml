@@ -39,7 +39,7 @@
     <string name="mobile_data_settings_shortcut">Mobile data settings shortcut</string>
     <string name="mobile_network_settings">Mobile network settings</string>
     <string name="data_usage">Data usage</string>
-    <string name="tethering_settings">Tethering settings</string>
+    <string name="tethering_and_portable_hotspot">Tethering &amp; portable hotspot</string>
 
     <string name="center_vertically">Center vertically</string>
     <string name="bg_transparency">Background transparency</string>
@@ -53,9 +53,9 @@
     -->
 
     <!-- Wifi 2.4GHz is used as an universal itendifier for 2.4GHz band -->
-    <string name="wifi_band_24ghz">2.4GHz</string>
+    <string name="wifi_band_24ghz" translatable="false">2.4 GHz</string>
     <!-- Wifi Internal 5GHz as an universal itendifier for 5GHz band -->
-    <string name="wifi_band_5ghz">5GHz</string>
+    <string name="wifi_band_5ghz" translatable="false">5 GHz</string>
 
     <!--
     END: android-5.1.1_r33
