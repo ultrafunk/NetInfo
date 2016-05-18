@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.database.ContentObserver;
+import android.net.TrafficStats;
 import android.net.Uri;
 import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiInfo;
@@ -164,8 +165,10 @@ public class NetworkStateService extends Service
 	public static void setWifiSecurityString(String wifiSecurityString) 		{ NetworkStateService.wifiSecurityString = wifiSecurityString; }
 
 	public static long getDataUsageBytes()										{ return dataUsageBytes; }
-	public static long setGetDataUsageBytes(long dataUsageBytes)
+	public static long setGetDataUsageBytes()
 	{
+		long dataUsageBytes = TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes();
+
 		if (dataUsageBytes > 0 )
 			NetworkStateService.dataUsageBytes = dataUsageBytes;
 

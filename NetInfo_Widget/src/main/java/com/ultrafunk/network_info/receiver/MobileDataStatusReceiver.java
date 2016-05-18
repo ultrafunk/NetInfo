@@ -21,7 +21,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.TrafficStats;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.telephony.TelephonyManager;
@@ -59,7 +58,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 		isMobileOutOfService = NetworkStateService.isMobileOutOfService();
 		isDataRoaming = isDataRoaming(context);
 		networkOperatorAndServiceProvider = getNetworkOperatorAndServiceProvider(context);
-		dataUsageBytes = NetworkStateService.setGetDataUsageBytes(TrafficStats.getMobileRxBytes() + TrafficStats.getMobileTxBytes());
+		dataUsageBytes = NetworkStateService.setGetDataUsageBytes();
 
 		if (Constants.ACTION_DATA_CONNECTION_CHANGED.equals(action) ||
 			Constants.ACTION_DATA_STATE_CHANGED.equals(action) ||
