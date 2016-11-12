@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
 
 public class MobileDataUtils
 {
-	public static boolean isMobileDataEnabled(Context context)
+	static boolean isMobileDataEnabled(Context context)
 	{
 		try
 		{
@@ -47,7 +47,7 @@ public class MobileDataUtils
 		return false;
 	}
 
-	public static void setMobileDataEnabled(Context context, boolean enable)
+	static void setMobileDataEnabled(Context context, boolean enable)
 	{
 		try
 		{
@@ -62,7 +62,7 @@ public class MobileDataUtils
 		}
 	}
 
-	public static boolean isAirplaneModeOn(Context context)
+	static boolean isAirplaneModeOn(Context context)
 	{
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1)
 			return Settings.System.getInt(context.getContentResolver(),	Settings.System.AIRPLANE_MODE_ON, 0) == 1;
@@ -78,24 +78,24 @@ public class MobileDataUtils
 			return Settings.Global.getInt(context.getContentResolver(), Settings.Global.DATA_ROAMING, 0) == 1;
 	}
 
-	public static String getNetworkTypeString(int networkType)
+	static String getNetworkTypeString(int networkType, boolean shortString)
 	{
 		switch (networkType)
 		{
-			case TelephonyManager.NETWORK_TYPE_GPRS:	return "GPRS 2G";
-			case TelephonyManager.NETWORK_TYPE_EDGE:	return "EDGE 2G";
-			case TelephonyManager.NETWORK_TYPE_UMTS:	return "UMTS 3G";
-			case TelephonyManager.NETWORK_TYPE_CDMA:	return "CDMA 3G";
-			case TelephonyManager.NETWORK_TYPE_EVDO_0:	return "EVDO 0 3G";
-			case TelephonyManager.NETWORK_TYPE_EVDO_A:	return "EVDO A 3G";
-			case TelephonyManager.NETWORK_TYPE_EVDO_B:	return "EVDO B 3G";
-			case TelephonyManager.NETWORK_TYPE_1xRTT:	return "1xRTT 3G";
-			case TelephonyManager.NETWORK_TYPE_HSDPA:	return "HSDPA 3G";
-			case TelephonyManager.NETWORK_TYPE_HSUPA:	return "HSUPA 3G";
-			case TelephonyManager.NETWORK_TYPE_HSPA:	return "HSPA 3G";
-			case TelephonyManager.NETWORK_TYPE_LTE:		return "LTE 4G";
-			case TelephonyManager.NETWORK_TYPE_EHRPD:	return "eHRPD 3/4G";
-			case TelephonyManager.NETWORK_TYPE_HSPAP:	return "HSPA+ 3G";
+			case TelephonyManager.NETWORK_TYPE_GPRS:	return shortString ? "2G"	: "GPRS 2G";
+			case TelephonyManager.NETWORK_TYPE_EDGE:	return shortString ? "2G"	: "EDGE 2G";
+			case TelephonyManager.NETWORK_TYPE_UMTS:	return shortString ? "3G"	: "UMTS 3G";
+			case TelephonyManager.NETWORK_TYPE_CDMA:	return shortString ? "3G"	: "CDMA 3G";
+			case TelephonyManager.NETWORK_TYPE_EVDO_0:	return shortString ? "3G"	: "EVDO 0 3G";
+			case TelephonyManager.NETWORK_TYPE_EVDO_A:	return shortString ? "3G"	: "EVDO A 3G";
+			case TelephonyManager.NETWORK_TYPE_EVDO_B:	return shortString ? "3G"	: "EVDO B 3G";
+			case TelephonyManager.NETWORK_TYPE_1xRTT:	return shortString ? "3G"	: "1xRTT 3G";
+			case TelephonyManager.NETWORK_TYPE_HSDPA:	return shortString ? "3G"	: "HSDPA 3G";
+			case TelephonyManager.NETWORK_TYPE_HSUPA:	return shortString ? "3G"	: "HSUPA 3G";
+			case TelephonyManager.NETWORK_TYPE_HSPA:	return shortString ? "3G"	: "HSPA 3G";
+			case TelephonyManager.NETWORK_TYPE_LTE:		return shortString ? "4G"	: "LTE 4G";
+			case TelephonyManager.NETWORK_TYPE_EHRPD:	return shortString ? "3/4G"	: "eHRPD 3/4G";
+			case TelephonyManager.NETWORK_TYPE_HSPAP:	return shortString ? "3G"	: "HSPA+ 3G";
 		}
 
 		return "Unknown";
@@ -112,7 +112,7 @@ public class MobileDataUtils
 		return new DecimalFormat("#,##0.#").format(size/Math.pow(1024, digitGroups)) + " " + units[digitGroups];
 	}
 
-	public static String getDataUsageString(Context context, long dataUsageBytes)
+	static String getDataUsageString(Context context, long dataUsageBytes)
 	{
 		if (dataUsageBytes <= 0)
 			return context.getString(R.string.data_usage_na);

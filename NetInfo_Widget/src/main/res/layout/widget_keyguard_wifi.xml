@@ -34,7 +34,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/wifiStateImageView"
                 android:paddingRight="12dp"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end" />
 
             <ImageView
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/wifiInfoTopTextView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
 

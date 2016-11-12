@@ -18,7 +18,7 @@ package com.ultrafunk.network_info;
 
 public class Constants
 {
-	public static final String APP_ID = BuildConfig.APPLICATION_ID;
+	private static final String APP_ID = BuildConfig.APPLICATION_ID;
 
 	public static final String ACTION_UPDATE_SERVICE_STATE			= "action.UPDATE_SERVICE_STATE";
 	public static final String EXTRA_ENABLED_WIDGETS_MOBILE_DATA	= "extra.ENABLED_WIDGETS_MOBILE_DATA";

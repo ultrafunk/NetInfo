@@ -34,14 +34,14 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/mobileStateImageView"
                 android:paddingRight="12dp"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end" />
 
             <ImageView
                 android:id="@+id/mobileStateImageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/ic_signal_cellular_off"
+                android:src="@drawable/ic_signal_cellular_enabled_off"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true" />
 
@@ -72,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
 
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/mobileInfoTopTextView"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:singleLine="true"
+                android:maxLines="1"
                 android:ellipsize="end"
                 android:gravity="center_horizontal" />
 

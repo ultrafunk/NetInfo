@@ -27,11 +27,11 @@ import com.ultrafunk.network_info.Constants;
 import com.ultrafunk.network_info.receiver.MobileDataUtils;
 import com.ultrafunk.network_info.util.Utils;
 
-public class MobileDataSettingObserver extends ContentObserver
+class MobileDataSettingObserver extends ContentObserver
 {
 	private final Context context;
 
-	public MobileDataSettingObserver(Context context)
+	MobileDataSettingObserver(Context context)
 	{
 		super(null);
 		this.context = context;

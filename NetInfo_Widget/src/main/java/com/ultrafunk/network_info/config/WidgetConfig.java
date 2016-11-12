@@ -71,7 +71,7 @@ public class WidgetConfig
 		setWidgetOptions(appWidgetId);
 	}
 
-	public void write(int appWidgetId)
+	void write(int appWidgetId)
 	{
 		if (sharedPreferences != null)
 		{
@@ -121,27 +121,27 @@ public class WidgetConfig
 		appWidgetManager.updateAppWidgetOptions(appWidgetId, options);
 	}
 
-	public boolean isLockscreenWidget()										{ return isLockscreenWidget; }
-	public void setLockscreenWidget(boolean isLockscreenWidget)				{ this.isLockscreenWidget = isLockscreenWidget; }
+	public boolean isLockscreenWidget()								{ return isLockscreenWidget; }
+	void setLockscreenWidget(boolean isLockscreenWidget)			{ this.isLockscreenWidget = isLockscreenWidget; }
 
-	public boolean showMobileDataWidget()									{ return mobileDataWidget; }
-	public void setMobileDataWidget(boolean mobileDataWidget)				{ this.mobileDataWidget = mobileDataWidget; }
+	public boolean showMobileDataWidget()							{ return mobileDataWidget; }
+	void setMobileDataWidget(boolean mobileDataWidget)				{ this.mobileDataWidget = mobileDataWidget; }
 
-	public boolean showWifiWidget()											{ return wifiWidget; }
-	public void setWifiWidget(boolean wifiWidget)							{ this.wifiWidget = wifiWidget; }
+	public boolean showWifiWidget()									{ return wifiWidget; }
+	void setWifiWidget(boolean wifiWidget)							{ this.wifiWidget = wifiWidget; }
 
-	public boolean showBothWidgets()										{ return mobileDataWidget && wifiWidget; }
-	public void setBothWidgets(boolean bothWidgets)							{ mobileDataWidget = bothWidgets; wifiWidget = bothWidgets; }
+	public boolean showBothWidgets()								{ return mobileDataWidget && wifiWidget; }
+	void setBothWidgets(boolean bothWidgets)						{ mobileDataWidget = bothWidgets; wifiWidget = bothWidgets; }
 
-	public int getLayoutId()												{ return layoutId; }
+	public int getLayoutId()										{ return layoutId; }
 
-	public int getMobileDataSettingsScreen()								{ return mobileDataSettingsScreen; }
-    public void setMobileDataSettingsScreen(int mobileDataSettingsScreen)	{ this.mobileDataSettingsScreen = mobileDataSettingsScreen; }
+	public int getMobileDataSettingsScreen()						{ return mobileDataSettingsScreen; }
+    void setMobileDataSettingsScreen(int mobileDataSettingsScreen)	{ this.mobileDataSettingsScreen = mobileDataSettingsScreen; }
 
-	public int getLockscreenGravity()										{ return lockscreenGravity; }
-	public void setLockscreenGravity(int lockscreenGravity)					{ this.lockscreenGravity = lockscreenGravity; }
+	public int getLockscreenGravity()								{ return lockscreenGravity; }
+	void setLockscreenGravity(int lockscreenGravity)				{ this.lockscreenGravity = lockscreenGravity; }
 
-	public int getBackgroundTransparency()									{ return backgroundTransparency; }
-	public int getBackgroundTransparencyAlpha()								{ return (int) ((100 - backgroundTransparency) * 2.55); }
-	public void setBackgroundTransparency(int backgroundTransparency)		{ this.backgroundTransparency = backgroundTransparency; }
+	int getBackgroundTransparency()									{ return backgroundTransparency; }
+	public int getBackgroundTransparencyAlpha()						{ return (int) ((100 - backgroundTransparency) * 2.55); }
+	void setBackgroundTransparency(int backgroundTransparency)		{ this.backgroundTransparency = backgroundTransparency; }
 }

@@ -132,11 +132,11 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 	@Override
 	protected void updateView(Context context, RemoteViews remoteViews, Bundle widgetOptions)
 	{
-		if (isMobileDataEnabled && isMobileOutOfService)
+		if (isMobileOutOfService)
 		{
-			setStateColor(context, remoteViews, STATE_ON);
+			setStateColor(context, remoteViews, isMobileDataEnabled ? STATE_ON : STATE_OFF);
 			remoteViews.setTextViewText(R.id.mobileNameTextView, context.getString(R.string.mobile_data));
-			remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_enabled);
+			remoteViews.setImageViewResource(R.id.mobileStateImageView, isMobileDataEnabled ? R.drawable.ic_signal_cellular_disabled : R.drawable.ic_signal_cellular_disabled_off);
 			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
 			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.no_service));
 			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.GONE);
@@ -153,7 +153,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 				setStateColor(context, remoteViews, STATE_ON);
 				remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
 				remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_enabled);
-				remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.not_connected));
+				remoteViews.setTextViewText(R.id.mobileInfoTopTextView, String.format("%s (%s)", context.getString(R.string.not_connected), MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType(), true)));
 				remoteViews.setTextColor(R.id.mobileInfoBottomTextView, ContextCompat.getColor(context, R.color.medium_gray));
 				remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsageString(context, NetworkStateService.getDataUsageBytes()));
 			}
@@ -161,17 +161,18 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			{
 				setStateColor(context, remoteViews, STATE_OFF);
 				remoteViews.setTextViewText(R.id.mobileNameTextView, isAirplaneModeOn ? context.getString(R.string.mobile_data) : networkOperatorAndServiceProvider);
-				remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_off);
 
 				if (isAirplaneModeOn)
 				{
-					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.flight_mode));
+					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, context.getString(R.string.airplane_mode));
 					remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.GONE);
+					remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_disabled_off);
 				}
 				else
 				{
-					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType()) + (isDataRoaming ? " - " + context.getString(R.string.roaming) : ""));
+					remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType(), false) + (isDataRoaming ? " - " + context.getString(R.string.roaming) : ""));
 					remoteViews.setTextViewText(R.id.mobileInfoBottomTextView, MobileDataUtils.getDataUsageString(context, NetworkStateService.getDataUsageBytes()));
+					remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_enabled_off);
 				}
 			}
 		}
@@ -181,7 +182,7 @@ public class MobileDataStatusReceiver extends WidgetBroadcastReceiver
 			remoteViews.setTextViewText(R.id.mobileNameTextView, networkOperatorAndServiceProvider);
 			remoteViews.setImageViewResource(R.id.mobileStateImageView, R.drawable.ic_signal_cellular_on);
 			remoteViews.setViewVisibility(R.id.mobileInfoTopTextView, View.VISIBLE);
-			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType()) + (isDataRoaming ? " - " + context.getString(R.string.roaming) : ""));
+			remoteViews.setTextViewText(R.id.mobileInfoTopTextView, MobileDataUtils.getNetworkTypeString(telephonyManager.getNetworkType(), false) + (isDataRoaming ? " - " + context.getString(R.string.roaming) : ""));
 			remoteViews.setViewVisibility(R.id.mobileInfoBottomTextView, View.VISIBLE);
 
 			boolean isConnecting = ((dataState == TelephonyManager.DATA_CONNECTING) || NetworkStateService.isWaitingForDataUsage());

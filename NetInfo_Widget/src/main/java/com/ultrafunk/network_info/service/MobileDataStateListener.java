@@ -25,11 +25,11 @@ import android.telephony.TelephonyManager;
 
 import com.ultrafunk.network_info.Constants;
 
-public class MobileDataStateListener extends PhoneStateListener
+class MobileDataStateListener extends PhoneStateListener
 {
 	private final Context context;
 
-	public MobileDataStateListener(Context context)
+	MobileDataStateListener(Context context)
 	{
 		this.context = context;
 	}

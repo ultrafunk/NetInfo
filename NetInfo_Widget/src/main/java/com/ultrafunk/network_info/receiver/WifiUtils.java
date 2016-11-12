@@ -23,9 +23,9 @@ import android.net.wifi.WifiManager;
 
 import com.ultrafunk.network_info.R;
 
-public class WifiUtils
+class WifiUtils
 {
-	public static String getIpAddressString(int ipAddress)
+	static String getIpAddressString(int ipAddress)
 	{
 		return String.format("%d.%d.%d.%d",	(ipAddress & 0xff),	(ipAddress >> 8 & 0xff), (ipAddress >> 16 & 0xff), (ipAddress >> 24 & 0xff));
 	}
@@ -44,7 +44,7 @@ public class WifiUtils
 
 	// END: android-5.1.1_r33
 
-	public static String getWifiFrequencyString(Context context, int frequency)
+	static String getWifiFrequencyString(Context context, int frequency)
 	{
 		if (frequency >= LOWER_FREQ_24GHZ && frequency < HIGHER_FREQ_24GHZ)
 			return context.getString(R.string.wifi_band_24ghz);
@@ -54,7 +54,7 @@ public class WifiUtils
 		return context.getString(R.string.not_available);
 	}
 
-	public static String getSecurityString(Context context, WifiManager wifiManager, String connectedBSSID)
+	static String getSecurityString(Context context, WifiManager wifiManager, String connectedBSSID)
 	{
 		ScanResult connectedScanResult = null;
 

@@ -69,7 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:singleLine="true"
+            android:maxLines="1"
             android:ellipsize="end"
             android:gravity="center_horizontal" />
 
@@ -80,7 +80,7 @@
             android:layout_below="@+id/wifiInfoTopTextView"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:fontFamily="sans-serif-condensed"
-            android:singleLine="true"
+            android:maxLines="1"
             android:ellipsize="end"
             android:gravity="center_horizontal" />
 
