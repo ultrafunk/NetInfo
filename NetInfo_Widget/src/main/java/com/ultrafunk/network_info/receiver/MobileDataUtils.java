@@ -98,7 +98,7 @@ public class MobileDataUtils
 			case TelephonyManager.NETWORK_TYPE_HSPAP:	return shortString ? "3G"	: "HSPA+ 3G";
 		}
 
-		return "Unknown";
+		return shortString ? "N/A" : "Unknown";
 	}
 
 	private static String readableSize(long size)
