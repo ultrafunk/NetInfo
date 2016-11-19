@@ -27,6 +27,7 @@
     <string name="no_network">no network</string>
     <string name="connecting">connecting…</string>
     <string name="disconnecting">disconnecting…</string>
+    <string name="scanning">scanning…</string>
 
     <!-- Widget configuration -->
     <string name="lockscreen_configuration">Lock Screen Configuration</string>

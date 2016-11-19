@@ -173,13 +173,16 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 
 				switch (wifiInfo.getSupplicantState())
 				{
-					case DISCONNECTED:
 					case DORMANT:
 					case INTERFACE_DISABLED:
 						remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.disconnecting));
 						break;
 
 					case SCANNING:
+						remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.scanning));
+						break;
+
+					case DISCONNECTED:
 					case INVALID:
 					case UNINITIALIZED:
 					case INACTIVE:
