@@ -144,12 +144,12 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 		}
 		else if (wifiState == WifiManager.WIFI_STATE_ENABLED)
 		{
-			remoteViews.setImageViewResource(R.id.wifiStateImageView, R.drawable.ic_signal_wifi_on);
+			setStateColor(context, remoteViews, STATE_ON);
 			remoteViews.setViewVisibility(R.id.wifiInfoTopTextView, View.VISIBLE);
 
 			if (wifiInfo.getIpAddress() != 0)
 			{
-				setStateColor(context, remoteViews, STATE_ON);
+				remoteViews.setImageViewResource(R.id.wifiStateImageView, R.drawable.ic_signal_wifi_on);
 				remoteViews.setTextViewText(R.id.wifiNameTextView, wifiInfo.getSSID().replace("\"", ""));
 
 				if(!detailsString.isEmpty())
@@ -169,6 +169,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 			}
 			else
 			{
+				remoteViews.setImageViewResource(R.id.wifiStateImageView, R.drawable.ic_signal_wifi_enabled);
 				remoteViews.setViewVisibility(R.id.wifiInfoBottomTextView, View.GONE);
 
 				switch (wifiInfo.getSupplicantState())
@@ -186,9 +187,7 @@ public class WifiStatusReceiver extends WidgetBroadcastReceiver
 					case INVALID:
 					case UNINITIALIZED:
 					case INACTIVE:
-						setStateColor(context, remoteViews, STATE_ON);
 						remoteViews.setTextViewText(R.id.wifiNameTextView, context.getString(R.string.wifi));
-						remoteViews.setImageViewResource(R.id.wifiStateImageView, R.drawable.ic_signal_wifi_enabled);
 						remoteViews.setTextViewText(R.id.wifiInfoTopTextView, context.getString(R.string.no_network));
 						break;
 
