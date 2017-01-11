@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NetInfo Widget</string>
+    <string name="widget_name">NetInfo</string>
+
+    <!-- Widget info -->
+    <string name="mobile_data">モバイル通信</string>
+    <string name="wifi">Wi-Fi</string>
+
+    <string name="tap_to_change">タップして変更</string>
+    <string name="turning_on">オンにしています…</string>
+    <string name="turning_off">オフにしています…</string>
+
+    <string name="not_available">N/A</string>
+    <string name="no_service">サービスなし</string>
+    <string name="not_connected">未接続</string>
+    <string name="airplane_mode">機内モード</string>
+    <string name="error_mobile_data_on_flight_mode">機内モードがオンの間、モバイル通信をオンにできません。</string>
+    <string name="roaming">ローミング</string>
+    <string name="hour">時間</string>
+    <string name="day">日</string>
+    <string name="week">週</string>
+    <string name="data_usage_na">データ使用 n/a</string>
+
+    <string name="security">"セキュリティ: "</string>
+    <string name="no_network">ネットワークなし</string>
+    <string name="connecting">接続中…</string>
+    <string name="disconnecting">切断中…</string>
+    <string name="scanning">スキャン中…</string>
+
+    <!-- Widget configuration -->
+    <string name="lockscreen_configuration">ロック画面の設定</string>
+    <string name="homescreen_configuration">ホーム画面の設定</string>
+
+    <string name="mobile_data_2_1">モバイル通信 (2 x 1)</string>
+    <string name="wifi_2_1">Wi-Fi (2 x 1)</string>
+    <string name="mobile_and_wifi_2_2">モバイル通信 &amp; Wi-Fi (2 x 2)</string>
+
+    <string name="mobile_data_settings_shortcut">モバイル通信の設定ショートカット</string>
+    <string name="mobile_network_settings">モバイルネットワーク設定</string>
+    <string name="data_usage">データ使用</string>
+    <string name="tethering_and_portable_hotspot">テザリング &amp; ポータブルホットスポット</string>
+
+    <string name="center_vertically">中央で垂直に</string>
+    <string name="bg_transparency">背景の透明度</string>
+
+    <!--
+    START: android-5.1.1_r33
+    https://android.googlesource.com/platform/packages/apps/Settings/+/android-5.1.1_r33/res/values/strings.xml
+    -->
+
+    <!--
+    END: android-5.1.1_r33
+    -->
+
+    <!--
+    START: android-4.4.4_r2.0.1
+    https://android.googlesource.com/platform/packages/apps/Settings/+/android-4.4.4_r2.0.1/res/values/strings.xml
+    -->
+
+    <!-- Used in Wi-Fi settings dialogs when Wi-Fi does not have any security. -->
+    <string name="wifi_security_none">開く</string>
+
+    <!--
+    END: android-4.4.4_r2.0.1
+    -->
+
+</resources>
