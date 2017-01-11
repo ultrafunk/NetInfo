@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">NetInfo Widget</string>
+    <string name="widget_name">NetInfo</string>
+    <string name="bg_transparency">Nivel de transparencia del fondo</string>
+    <string name="center_vertically">Centrar verticalmente</string>
+    <string name="flight_mode">modo avión</string>
+    <string name="mobile_and_wifi_2_2">Datos móviles y Wi-Fi (2 x 2)</string>
+    <string name="mobile_data">Datos móviles</string>
+    <string name="mobile_data_2_1">Datos móviles (2 x 1)</string>
+    <string name="no_service">sin servicio</string>
+    <string name="not_connected">no conectado</string>
+    <string name="roaming">itinerancia</string>
+    <string name="tap_to_change">toca para cambiar</string>
+    <string name="wifi">Wi-Fi</string>
+    <string name="wifi_2_1">Wi-Fi (2 x 1)</string>
+    <string name="wifi_security_none">sin seguridad</string>
+    <string name="turning_off">desactivando…</string>
+    <string name="turning_on">activando…</string>
+    <string name="security">Seguridad</string>
+    <string name="no_network">sin red</string>
+    <string name="connecting">conectando…</string>
+    <string name="error_mobile_data_on_flight_mode">No se pueden activar los datos móviles mientras el modo avión esté activado.</string>
+    <string name="homescreen_configuration">Configuración de la pantalla de inicio</string>
+    <string name="lockscreen_configuration">Configuración de la pantalla de bloqueo</string>
+    <string name="data_usage">Uso de datos</string>
+    <string name="mobile_data_settings_screen">Pantalla de configuración de datos móviles</string>
+    <string name="mobile_network_settings">Configuración de datos móviles</string>
+    <string name="settings_screen">Pantalla de configuración</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="week">week</string>
+    <string name="data_usage_na">data usage n/a</string>
+    <string name="not_available">N/A</string>
+</resources>
